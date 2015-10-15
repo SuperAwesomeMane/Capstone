@@ -10,9 +10,27 @@ router.route('/google/callback')
     }));
 
 router.route('/google')
-	.get(passport.authenticate('google', {
-		scope: ['https://www.googleapis.com/auth/userinfo.profile',
-				'https://www.googleapis.com/auth/userinfo.email']
-	}));
+    .get(passport.authenticate('google', {
+        scope: ['https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email'
+        ]
+    }));
+
+router.route('/facebook')
+    .get(passport.authenticate('facebook', {
+        scope: ['email']
+    }));
+
+router.route('/facebook/callback')
+    .get(passport.authenticate('facebook', {
+        successRedirect: '/users',
+        failureRedirect: '/error'
+    })),
+    function(req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/users/');
+    };
+
+
 
 module.exports = router;

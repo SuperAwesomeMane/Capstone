@@ -22,9 +22,12 @@ app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname, 'views/index.html'));
     // res.send("Welcome to my API.");
 });
-app.get('/addBooks', function(req, res) {
+app.get('/addBook', function(req, res) {
 	res.sendFile(path.join(__dirname, 'views/addBook.html'));
 });
+app.get('/getBook', function(req, res) {
+	res.sendFile(path.join(__dirname, 'views/getBook.html'));
+})
 
 app.listen(port, function() {
     console.log("Running my app on port " + port);
