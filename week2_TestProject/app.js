@@ -28,6 +28,9 @@ app.get('/addBook', function(req, res) {
 app.get('/getBook', function(req, res) {
 	res.sendFile(path.join(__dirname, 'views/getBook.html'));
 })
+app.get('/deleteBook', function(req, res) {
+	res.sendFile(path.join(__dirname, 'views/deleteBook.html'));
+})
 
 app.listen(port, function() {
     console.log("Running my app on port " + port);

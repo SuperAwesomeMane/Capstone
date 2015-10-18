@@ -21,16 +21,12 @@ router.route('/facebook')
         scope: ['email']
     }));
 
-router.route('/facebook/callback')
+router.route('/facebook/cllback')
     .get(passport.authenticate('facebook', {
         successRedirect: '/users',
         failureRedirect: '/error'
-    })),
-    function(req, res) {
-        // Successful authentication, redirect home.
-        res.redirect('/users/');
-    };
-
-
+    }, function(req, res) {
+        console.log("THE USER: ", req.user);
+    }));
 
 module.exports = router;

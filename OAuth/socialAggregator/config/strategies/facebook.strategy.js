@@ -1,34 +1,39 @@
 var passport = require('passport'),
     FacebookStrategy = require('passport-facebook').Strategy;
-
+var User = require('../../models/userModel');
 
 module.exports = function() {
 
     passport.use(new FacebookStrategy({
-            clientID: '798477760262639',
-            clientSecret: '965856c31814637572590172fc69c1f0',
+            clientID: '1477999829175725',
+            clientSecret: '4b42ea56709c5b093aee21ad3d7ec4f4',
             callbackURL: "http://localhost:3000/auth/facebook/callback",
-            enableProof: false,
+            passReqToCallback: true,
         },
         function(accessToken, refreshToken, profile, done) {
 
-            var user = {};
-            user.displayName = profile.displayName;
-            // user.image = profile._json.image.url;
-            user.email = profile.emails[0].value;
+            var query = {
+                'facebook.id': profile.id
+            };
+            User.findOne(query, function(error, user) {
+                if (user) {
+                    console.log('found');
+                    done(null, user);
+                } else {
+                    console.log('not found');
+                    var user = new User;
+                    user.displayName = profile.displayName;
+                    // user.image = profile._json.image.url;
+                    user.email = profile.emails[0].value;
 
-            user.facebook = {};
-            user.facebook.id = profile.id;
-            user.facebook.token = accessToken;
+                    user.facebook = {};
+                    user.facebook.id = profile.id;
+                    user.facebook.token = accessToken;
 
-            done(null, user);
-            
-            // User.findOrCreate({
-            //     facebookId: profile.id
-            // }, function(err, user) {
-            //     return done(err, user);
-            // });
-
+                    user.save();
+                    done(null, user);
+                }
+            })
         }
     ));
     // passport.use(new FacebookStrategy({
