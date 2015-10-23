@@ -8,13 +8,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
+var mongoose = require('mongoose')
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var profile = require('./routes/profile');
 var auth = require('./routes/auth');
 
 var app = express();
-
+var db = mongoose.connect('mongodb://localhost/capstoneclef');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,9 +33,8 @@ app.use(session({secret: 'anything'}));
 
 require('./config/passport')(app);
 
-
 app.use('/', routes);
-app.use('/users', users);
+app.use('/profile', profile);
 app.use('/auth', auth);
 
 // catch 404 and forward to error handler
