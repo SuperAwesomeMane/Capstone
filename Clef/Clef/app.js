@@ -14,6 +14,9 @@ var routes = require('./routes/index');
 var profile = require('./routes/profile');
 var auth = require('./routes/auth');
 
+var LocalStrategy = require('passport-local').Strategy;
+var User = require('./models/userModel');
+
 var app = express();
 var db = mongoose.connect('mongodb://localhost/clef');
 
@@ -36,6 +39,67 @@ require('./config/passport')(app);
 app.use('/', routes);
 app.use('/profile', profile);
 app.use('/auth', auth);
+
+// Local User Authentication
+// =====================================================
+
+app.get('/login', function(req, res) {
+  res.render('login');
+});
+app.post('/login',
+    passport.authenticate('local', {
+      successRedirect: '/profile',
+      failureRedirect: '/login'
+    })
+);
+
+// app.get('/loginFailure', function(req, res, next) {
+  // res.send('Failed to authenticate');
+// });
+// app.get('/loginSuccess', function(req, res, next) {
+  // res.send('Successfully authenticated');
+// });
+
+app.get('/register', function(req, res) {
+  res.render('register');
+});
+app.post('/register', function(req, res, done) {
+  var newUser = new User;
+  newUser.username = req.body.username;
+  newUser.password = req.body.password;
+  newUser.email = req.body.email;
+
+  newUser.save();
+  done(null, newUser);
+
+});
+
+passport.use(new LocalStrategy(function(username, password, done) {
+    process.nextTick(function() {
+        User.findOne({
+            'username': username,
+        }, function(err, user) {
+            if (err) {
+                return done(err);
+            }
+
+            if (!user) {
+                return done(null, false);
+            }
+
+            if (user.password != password) {
+                return done(null, false);
+            }
+
+            return done(null, user);
+        });
+    });
+}));
+
+
+// =====================================================
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

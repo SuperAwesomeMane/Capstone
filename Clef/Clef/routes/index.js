@@ -6,8 +6,4 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Clef' });
 });
 
-router.route('/login', function(req, res, next) {
-	res.render('/login')
-});
-
 module.exports = router;

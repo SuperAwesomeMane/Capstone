@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Welcome, <%=user.name%></title>
+	<title>Clef - Register</title>
 	<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/stylesheets/style.css">
@@ -9,9 +9,14 @@
 	<script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
-	<div style="background: linear-gradient(#3C3C3C, #797979); color: white;">
-		<img style="border: 2px solid black;" src='<%=user.image%>'>
-		<p><%=user.username%></p>
+	<div>
+		<h1>Clef - Register</h1>
+		<form method='POST' action="/register">
+			<input name="username" placeholder="Username" required>
+			<input name="password" type='password' placeholder="Password" required>
+			<input name="email" placeholder="Email" required>
+			<input type='submit' value="Register">
+		</form>
 	</div>
 </body>
 </html>
