@@ -1,7 +1,8 @@
 var passport = require('passport'),
     FacebookStrategy = require('passport-facebook').Strategy;
+var User = require('../../models/userModel');
 
-module.exports = function() {
+// module.exports = function() {
     passport.use(new FacebookStrategy({
             clientID: '972059372885571',
             clientSecret: '4793c2ac473d14363e22102d1a194000',
@@ -10,18 +11,31 @@ module.exports = function() {
             passReqToCallback: true
         },
         function(req, accessToken, refreshToken, profile, done) {
-            var user = {};
+            var query = {
+                'facebook.id': profile.id
+            };
 
-            user.email = profile.emails[0].value;
-            user.image = profile.photos[0].value;
-            user.username = profile.name.givenName + ' ' + profile.name.familyName;
+            User.findOne(query, function(error, user) {
+                if (user) {
+                    console.log('Facebook user found');
+                    done(null, user);
+                } else {
+                    console.log('Facebook user NOT found');
+                    var user = new User;
 
-            user.facebook = {};
-            user.facebook.id = profile.id;
-            user.facebook.token = accessToken;
+                    user.email = profile.emails[0].value;
+                    user.image = profile.photos[0].value;
+                    user.displayName = profile.name.givenName + ' ' + profile.name.familyName;
 
-            console.log('USERNAME: ' + user.username);
+                    user.facebook = {};
+                    user.facebook.id = profile.id;
+                    user.facebook.token = accessToken;
 
-            done(null, user);
+                    // console.log('USERNAME: ' + user.displayName);
+
+                    user.save();
+                    done(null, user);
+                }
+            })
         }));
 }

@@ -15,7 +15,7 @@ var profile = require('./routes/profile');
 var auth = require('./routes/auth');
 
 var app = express();
-var db = mongoose.connect('mongodb://localhost/capstoneclef');
+var db = mongoose.connect('mongodb://localhost/clef');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -15,10 +15,10 @@ module.exports = function() {
             };
             User.findOne(query, function(error, user) {
                 if (user) {
-                    console.log("USER WAS FOUND");
+                    console.log("Google user found");
                     done(null, user);
                 } else {
-                    console.log("USER WAS NOT FOUND!")
+                    console.log("Google user NOT found")
                     var user = new User;
                     user.email = profile.emails[0].value;
                     user.image = profile._json.image.url;
@@ -28,7 +28,9 @@ module.exports = function() {
                     user.google.id = profile.id;
                     user.google.token = accessToken;
 
-                    // console.log('EMAIL: ' + user.email);
+                    // console.log('username: ' + user.displayName);
+                    // console.log('image: ' + user.image);
+
                     user.save();
                     done(null, user);
                 }
