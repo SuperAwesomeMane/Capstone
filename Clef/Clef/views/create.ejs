@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title><%=user.username%>'s Profile</title>
+	<title>Clef - Create</title>
 	<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/stylesheets/style.css">
@@ -11,9 +11,21 @@
 <body class="homepage">
 	<header class="header">
 		<nav class="authNav">
-			<ul>
-			    <li class="profileName"><%=user.username%></li>
-			    <li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
+			<ul class="social list-inline">
+				<% if(user != null) { %>
+					<li class="username"><a href="/profile"><%=user.username%></a></li>
+			    	<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
+				<% } %>
+				<% if(user == 'null') { %>
+			    <li>
+					<a href="/auth/google" class="googleplus"><i class="fa fa-google-plus"></i></a>
+			    <li>|</li>
+				<li>
+					<a href="/auth/facebook" class="facebook"><i class="fa fa-facebook"></i></a>
+				</li>
+			    <li>|</li>
+			    <li><a href="/login">Login</a></li>
+			    <% } %>
 			</ul>
 		</nav>
 	</header>
@@ -25,22 +37,15 @@
 			<ul>
 			    <li><a href="/">Home</a></li>
 			    <li><a href="/learn">Learn</a></li>
-			    <li><a href="/create">Create</a></li>
+			    <li class="selected"><a href="/create">Create</a></li>
 			</ul>
 		</nav>
 		<section >
 		</section>
-		<section class="profileFlex">
-			<section class="profileSection">
-				<h1>Progress</h1>
-				<div class="progressDiv">
-					<p>Lessons Completed: //user stat</p>
-					<p>Lessons Incompleted: //user stat</p>
-				</div>
-				<h1>Songs</h1>
-				<div class="songDiv">
-					<p>No Songs yet :(</p>
-				</div>
+		<section class="createFlex">
+			<section class="createSections">
+			</section>
+			<section class="createSections">
 			</section>
 		</section>
 	</main>

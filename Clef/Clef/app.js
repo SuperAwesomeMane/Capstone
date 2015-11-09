@@ -11,6 +11,8 @@ var session = require('express-session');
 var mongoose = require('mongoose')
 
 var routes = require('./routes/index');
+var learn = require('./routes/learn');
+var create = require('./routes/create');
 var profile = require('./routes/profile');
 var auth = require('./routes/auth');
 
@@ -37,6 +39,8 @@ app.use(session({secret: 'anything'}));
 require('./config/passport')(app);
 
 app.use('/', routes);
+app.use('/learn', learn);
+app.use('/create', create);
 app.use('/profile', profile);
 app.use('/auth', auth);
 
@@ -53,25 +57,19 @@ app.post('/login',
     })
 );
 
-// app.get('/loginFailure', function(req, res, next) {
-  // res.send('Failed to authenticate');
-// });
-// app.get('/loginSuccess', function(req, res, next) {
-  // res.send('Successfully authenticated');
-// });
-
 app.get('/register', function(req, res) {
   res.render('register');
 });
-app.post('/register', function(req, res, done) {
+app.post('/register', function(req, res) {
   var newUser = new User;
   newUser.username = req.body.username;
+  newUser.image = "images/default.png";
   newUser.password = req.body.password;
   newUser.email = req.body.email;
 
   newUser.save();
-  done(null, newUser);
 
+  res.redirect("/profile");
 });
 
 passport.use(new LocalStrategy(function(username, password, done) {
@@ -96,10 +94,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
     });
 }));
 
-
 // =====================================================
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

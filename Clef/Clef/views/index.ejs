@@ -8,16 +8,47 @@
 	<script src="/lib/jquery/dist/jquery.js"></script>
 	<script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
 </head>
-<body>
-	<div>
-		<h1><%=title%></h1>
-		<ul class="social list-inline">
-		    <li>
-			<a href="/auth/google" class="googleplus"><i class="fa fa-google-plus"></i></a>
-			<li>
-			<a href="/auth/facebook" class="facebook"><i class="fa fa-facebook"></i></a>
-		</li>
-		</ul>
-	</div>
+<body class="homepage">
+	<header class="header">
+		<nav class="authNav">
+			<ul class="social list-inline">
+				<% if(user != null) { %>
+					<li class="username"><a href="/profile"><%=user.username%></a></li>
+					<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
+				<% } %>
+				<% if(user == 'null') { %>
+			    <li>
+					<a href="/auth/google" class="googleplus"><i class="fa fa-google-plus"></i></a>
+			    <li>|</li>
+				<li>
+					<a href="/auth/facebook" class="facebook"><i class="fa fa-facebook"></i></a>
+				</li>
+			    <li>|</li>
+			    <li><a href="/login">Login</a></li>
+			    <% } %>
+			</ul>
+		</nav>
+	</header>
+
+	<main class="homeContent">
+		<section class="homeLogo">
+			<a href="/"><img alt="Clef - Home" src="/images/logo.png"></a>
+		</section>
+		<section class="homeFlex">
+			<section class="learnSection">
+				<h2>Start right now and learn how to read music all by yourself by completing our lessons.</h2>
+				<br>
+				<a href="/learn"><button class="learnBtn">Learn</button></a>
+			</section>
+			<section class="createSection">
+				<h2>Take the knowledge you've learned so far and use it to create your own melodies.</h2>
+				<br>
+				<a href="/create"><button class="createBtn">Create</button></a>
+			</section>
+		</section>
+	</main>
+	<footer class="site-footer">
+		<p>&copy; Copyright 2015</p>
+	</footer>
 </body>
 </html>

@@ -1,8 +1,261 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Helvetica Neue", Arial, sans-serif;
+  color: white;
 }
 
-a {
+.homepage {
+	background: url("../images/clefBack.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+}
+.header {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 5%;
+	background-color: rgba(0,0,0,.5);
+	margin-bottom: 50px;
+}
+.authNav a {
   color: #00B7FF;
+}
+.authNav {
+	width: auto;
+	height: 50px;
+	padding: 5px;
+}
+.authNav ul {
+	margin: 0;
+	padding: 0;
+}
+.authNav li {
+	list-style: none;
+	list-style-image: none;
+	padding: 10px;
+	margin: 0;
+	float: right;
+	font-size: 1.4em;
+}
+.username {
+	text-decoration: underline;
+}
+
+.profileName {
+	text-decoration: none;
+}
+.userPic {
+	width: 40px;
+	height: 40px;
+	margin-top: -10px;
+}
+
+.mainNav a {
+	color: black;
+	border-bottom: 3px solid black;
+}
+.mainNav a:hover {
+	text-decoration: none;
+	color: white;
+	border-bottom: 3px solid white;
+}
+.mainNav {
+	width: 340px;
+	height: 50px;
+	margin: 0 auto;
+}
+.mainNav ul {
+	margin: 0;
+	padding: 0;
+}
+.mainNav li {
+	list-style: none;
+	list-style-image: none;
+	padding: 10px;
+	margin: 0;
+	float: left;
+	font-size: 2em;
+}
+
+.selected {
+4	background-color: black;
+	color: white;
+}
+.selected a {
+	color: white;
+	border-bottom: 3px solid white;
+}
+
+/*-----------------------------------------------------------------*/
+
+.pageTitle {
+	margin: 0 auto;
+	text-align: center;
+	color: black;
+}
+.pageTitle h1 {
+	font-size: 3em;
+}
+
+.homeContent {
+	min-height: 80%;
+}
+.homeLogo {
+	width: 400px;
+	height: 200px;
+	margin: 0 auto;
+}
+.homeLogo img {
+	width: 400px;
+	height: 200px;
+}
+.homeFlex {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: 0 auto;
+	margin-top: 70px;
+}
+.learnSection h2, .createSection h2 {
+	font-size: 2em;
+}
+.learnSection, .createSection {
+	width: 600px;
+	height: 400px;
+	background: rgba(185,231,255,.5);
+	margin: 20px;
+	text-align: center;
+	color: black;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 70px;
+}
+.learnBtn, .createBtn {
+	background-color: #6338c6;
+	border: 2px solid #33194d;
+	color: white;
+	width: 140px;
+	height: 60px;
+	font-size: 1.8em;
+	border-radius: 10px;
+	margin-top: 30px;
+}
+.learnBtn:hover, .createBtn:hover {
+	color: black;
+}
+
+.learnFlex {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: 0 auto;
+	margin-top: 70px;
+	margin-bottom: 50px;
+}
+.lessonSection {
+	flex-grow: 0;
+	background: rgba(185,231,255,.5);
+	min-width: 35%;
+	height: 450px;
+	margin: 0 auto;
+	margin: 20px;
+	padding: 20px;
+	text-align: center;
+	color: black;
+}
+.lessonName {
+	font-weight: bolder;
+}
+.lessonImage1 {
+	width: 40px;
+	height: 100px;
+}
+.lessonImage2, .lessonImage3, .lessonImage4, .lessongImage5, .lessonImage6 {
+	width: 100px;
+	height: 100px;
+}
+.lessonImage7 {
+	width: 300px;
+	height: 100px;
+}
+.lessonDescription {
+	width: 400px;
+	margin: 0 auto;
+	margin-top: 30px;
+}
+
+.lessonBtn {
+	background-color: #6338c6;
+	border: 2px solid #33194d;
+	color: white;
+	width: 140px;
+	height: 60px;
+	font-size: 1.8em;
+	border-radius: 10px;
+	margin-top: 30px;
+}
+
+.createFlex {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: 0 auto;
+	margin-top: 70px;
+}
+.createSections {
+	flex-grow: 0;
+	background: rgba(185,231,255,.5);
+	min-width: 35%;
+	height: 450px;
+	margin: 0 auto;
+	margin: 20px;
+	padding: 20px;
+	text-align: center;
+	color: black;
+}
+
+.profileFlex {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: 0 auto;
+	margin-top: 70px;
+}
+.profileSection {
+	background: rgba(185,231,255,.5);
+	min-width: 35%;
+	height: 450px;
+	margin: 0 auto;
+	margin: 20px;
+	padding: 20px;
+	text-align: center;
+	color: black;
+}
+.progressDiv, .songDiv {
+	margin: 0 auto;
+	width: 500px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	font-size: 1.2em;
+	text-align: center;
+}
+
+/*-----------------------------------------------------------------*/
+
+.site-footer {
+  height: auto;
+}
+.site-footer {
+	background-color: rgba(0,0,0,.5);
+	text-align: center;
+	width: 100%;
+	height: 10%;
+	margin: 0;
+	padding: 0;
+	padding: 20px;
 }
