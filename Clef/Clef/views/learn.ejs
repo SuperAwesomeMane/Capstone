@@ -12,7 +12,7 @@
 	<header class="header">
 		<nav class="authNav">
 			<ul class="social list-inline">
-				<% if(user != null) { %>
+				<% if(user != 'null') { %>
 					<li class="username"><a href="/profile"><%=user.username%></a></li>
 					<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
 				<% } %>
@@ -48,43 +48,45 @@
 				<h2 class="lessonName">The Basics</h2>
 				<img class="lessonImage1" src="images/treble.png">
 				<h3 class="lessonDescription">Jump right into it by learning the basics</h3>
-				<button class="lessonBtn">Begin</button>
+				<a href="/learn/lesson1"><button class="lessonBtn">Begin</button></a>
 			</section>
 			<section class="lessonSection">
 				<h2 class="lessonName">Notes &amp; Rests</h2>
 				<img class="lessonImage2" src="images/note.png">
 				<h3 class="lessonDescription">Learn the several types of notes and rests</h3>
-				<button class="lessonBtn">Begin</button>
+				<a href="/learn/lesson2"><button class="lessonBtn">Begin</button></a>
 			</section>
 			<section class="lessonSection">
 				<h2 class="lessonName">Note Modifiers</h2>
 				<img class="lessonImage3" src="images/mod.png">
 				<h3 class="lessonDescription">Any note can be modified in order to achieve a different sound</h3>
-				<button class="lessonBtn">Begin</button>
+				<a href="/learn/lesson3"><button class="lessonBtn">Begin</button></a>
 			</section>
 			<section class="lessonSection">
-				<h2 class="lessonName">Steps and Accidentals</h2>
+				<h2 class="lessonName">Steps &amp; Accidentals</h2>
 				<img class="lessonImage4" src="images/steps.png">
-				<h3 class="lessonDescription">Lesson Description</h3>
-				<button class="lessonBtn">Begin</button>
+				<h3 class="lessonDescription">Whole steps and half steps everywhere</h3>
+				<br><br><br>
+				<a href="/learn/lesson4"><button class="lessonBtn">Begin</button></a>
 			</section>
 			<section class="lessonSection">
-				<h2 class="lessonName">Measures and Time Signatures</h2>
+				<h2 class="lessonName">Measures &amp; Time Signatures</h2>
 				<img class="lessonImage5" src="images/bar.png">
-				<h3 class="lessonDescription">Lesson Description</h3>
-				<button class="lessonBtn">Begin</button>
+				<h3 class="lessonDescription">Learn about measures and how they relate to time signatures</h3>
+				<a href="/learn/lesson5"><button class="lessonBtn">Begin</button></a>
 			</section>
 			<section class="lessonSection">
-				<h2 class="lessonName">Rhythm and Meter</h2>
+				<h2 class="lessonName">Rhythm &amp; Meter</h2>
 				<img class="lessonImage6" src="images/rhythm.png">
-				<h3 class="lessonDescription">Lesson Description</h3>
-				<button class="lessonBtn">Begin</button>
+				<h3 class="lessonDescription">Learn how basic and complex time signatures</h3>
+				<br>
+				<a href="/learn/lesson6"><button class="lessonBtn">Begin</button></a>
 			</section>
 			<section class="lessonSection">
 				<h2 class="lessonName">Scales</h2>
 				<img class="lessonImage7" src="images/scale.png">
-				<h3 class="lessonDescription">Lesson Description</h3>
-				<button class="lessonBtn">Begin</button>
+				<h3 class="lessonDescription">Learn about some basic scales and how to play them</h3>
+				<a href="/learn/lesson7"><button class="lessonBtn">Begin</button></a>
 			</section>
 		</section>
 	</main>

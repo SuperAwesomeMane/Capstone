@@ -12,7 +12,7 @@
 	<header class="header">
 		<nav class="authNav">
 			<ul class="social list-inline">
-				<% if(user != null) { %>
+				<% if(user != 'null') { %>
 					<li class="username"><a href="/profile"><%=user.username%></a></li>
 			    	<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
 				<% } %>
@@ -40,12 +40,12 @@
 			    <li class="selected"><a href="/create">Create</a></li>
 			</ul>
 		</nav>
-		<section >
-		</section>
 		<section class="createFlex">
 			<section class="createSections">
+				<p>create song</p>
 			</section>
 			<section class="createSections">
+				<p>load song</p>
 			</section>
 		</section>
 	</main>

@@ -8,15 +8,32 @@
 	<script src="/lib/jquery/dist/jquery.js"></script>
 	<script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
 </head>
-<body>
-	<div>
-		<h1>Clef - Register</h1>
-		<form method='POST' action="/register">
-			<input name="username" placeholder="Username" required>
-			<input name="password" type='password' placeholder="Password" required>
-			<input name="email" placeholder="Email" required>
-			<input type='submit' value="Register">
-		</form>
-	</div>
+<body class="homepage">
+	<main>
+		<div class="pageTitle">
+			<h1>Clef</h1>
+		</div>
+		<nav class="mainNav">
+			<ul>
+			    <li><a href="/">Home</a></li>
+			    <li><a href="/learn">Learn</a></li>
+			    <li><a href="/create">Create</a></li>
+			</ul>
+		</nav>
+		<section class="registerFlex">
+			<h1 class="formTitle">Register</h1>
+			<br>
+			<p class="sm">Already have an account? <a href="/login">Login</a><p>
+			<form class="authForm" method='POST' action="/register">
+				<label>Username</label>
+				<input class="authInfo" name="username" placeholder="Username" required>
+				<label>Password</label>
+				<input class="authInfo" name="password" type='password' placeholder="Password" required>
+				<label>Email</label>
+				<input class="authInfo" name="email" placeholder="Email" required>
+				<input class="authBtn" type='submit' value="Register">
+			</form>
+		</section>
+	</main>
 </body>
 </html>
