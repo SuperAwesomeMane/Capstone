@@ -140,6 +140,9 @@ body {
 
 /*-----------------------------------------------------------------*/
 
+.hr {
+	border: 1px solid black;
+}
 .pageTitle {
 	margin: 0 auto;
 	text-align: center;
@@ -169,8 +172,34 @@ body {
 	margin: 0 auto;
 	margin-top: 70px;
 }
+span {
+	color: red;
+}
+.lessonFlex {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	margin-top: 70px;
+}
 .lessonInfoSection {
-
+	background-color: white;
+	border: 3px solid black;
+	width: 60%;
+	height: auto;
+	margin: 0 auto;
+	margin-bottom: 100px;
+	padding: 20px;
+	color: black;
+	text-align: center;
+}
+.lessonInfoSection img {
+	margin: 30px;
+}
+.lessonText {
+	font-size: 1.5em;
+	width: 80%;
+	margin: 0 auto;
 }
 .learnSection h2, .createSection h2 {
 	font-size: 2em;
