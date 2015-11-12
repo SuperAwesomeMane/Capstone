@@ -3,6 +3,10 @@ body {
   color: white;
 }
 
+.errorPage {
+	color: black;
+}
+
 .loginFlex, .registerFlex {
 	background: rgba(255,255,255,.6);
 	border-radius: 5px;
@@ -292,8 +296,8 @@ span {
 .createSections {
 	flex-grow: 0;
 	background: rgba(185,231,255,.5);
-	min-width: 35%;
-	height: 450px;
+	min-width: 400px;
+	height: 350px;
 	margin: 0 auto;
 	margin: 20px;
 	padding: 20px;

@@ -4,9 +4,13 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
     if (req.user) {
-        res.render('index', {user: req.user});
+        res.render('index', {
+            user: req.user
+        });
     } else {
-        res.render('index', {user: "null"});
+        res.render('index', {
+            user: "null"
+        });
     }
 });
 
