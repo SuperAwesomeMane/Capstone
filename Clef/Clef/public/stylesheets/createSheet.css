@@ -1,3 +1,48 @@
 body {
 	color: black;
+	margin: 0;
+	padding: 0;
+}
+
+.header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 50px;
+	background-color: rgba(0,0,0,.6);
+}
+
+.authNav a {
+  color: #00B7FF;
+}
+.authNav {
+	width: auto;
+	height: 50px;
+	padding: 5px;
+}
+.authNav ul {
+	margin: 0;
+	padding: 0;
+}
+.authNav li {
+	list-style: none;
+	list-style-image: none;
+	padding: 10px;
+	margin: 0;
+	float: right;
+	font-size: 1.4em;
+}
+.username {
+	text-decoration: underline;
+}
+.userPic {
+	width: 40px;
+	height: 40px;
+	margin-top: -12px;
+	border: 1px solid white;
+}
+
+.canvas {
+	color: black;
 }

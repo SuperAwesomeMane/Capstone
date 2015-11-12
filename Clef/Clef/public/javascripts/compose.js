@@ -18,6 +18,8 @@ function main() {
     
     stage.canvas.width = canvasWidth;
     stage.canvas.height = canvasHeight;
+    stage.canvas.x = "0";
+    stage.canvas.y = "50";
 
     var rect = new createjs.Rectangle(0, 0, 100, 100);
     rect.fillStyle = "red";
