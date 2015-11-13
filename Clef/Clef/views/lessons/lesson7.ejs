@@ -13,13 +13,17 @@
 		<nav class="authNav">
 			<ul class="social list-inline">
 				<li class="username"><a href="/profile"><%=user.username%></a></li>
-				<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+				<% if(user.image == "images/default.png") { %>
+					<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+				<% } else { %>
+					<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
+				<% } %>
 			</ul>
 		</nav>
 	</header>
 	<main class="homeContent">
 		<div class="pageTitle">
-			<h1>Scales</h1>
+			<h1>Lesson 7: Scales</h1>
 		</div>
 		<nav class="mainNav">
 			<ul>
@@ -31,6 +35,10 @@
 		<section class="lessonFlex">
 			<section class="lessonInfoSection">
 				
+
+				<hr class="hr">
+				<a class="lessonText lessonLinks" href="/learn/lesson6b">&#60; Lesson 6</a>
+				<a class="lessonText lessonLinks" href="/create">Create!</a>
 			</section>
 		</section>
 	</main>

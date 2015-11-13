@@ -13,13 +13,17 @@
 		<nav class="authNav">
 			<ul class="social list-inline">
 				<li class="username"><a href="/profile"><%=user.username%></a></li>
-				<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+				<% if(user.image == "images/default.png") { %>
+					<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+				<% } else { %>
+					<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
+				<% } %>
 			</ul>
 		</nav>
 	</header>
 	<main class="homeContent">
 		<div class="pageTitle">
-			<h1>The Basics</h1>
+			<h1>Lesson 1: The Basics</h1>
 		</div>
 		<nav class="mainNav">
 			<ul>
@@ -36,7 +40,6 @@
 				<img src="../images/lesson1/staff.jpg" alt="musical staff">
 				<p class="lessonText">If you were to picture a keyboard, each line or space represents a white key.</p>
 				<img src="../images/lesson1/whitekey.jpg" alt="note on white key">
-				
 				<hr class="hr">
 				
 				<p class="lessonText">In order to know what notes are on the staff, each staff has a certain clef which tells you what notes are on the staff. The two most common types of clefs are the <span>Treble Clef</span> and <span>Bass Clef</span>.</p>
@@ -45,30 +48,28 @@
 				<p class="lessonText">The staff line which the clef wraps around (shown in red) is known as G. Any note placed on this line becomes G.</p>
 				<img src="../images/lesson1/gclefNotes.jpg" alt="notes for g clef on a staff">
 				<p class="lessonText">Any note placed on the space above G, is an A note. It's important to remember that, in music, there is no 'H' note, or 'I' note, etc. There are only notes A through G, and then it loops back to A.</p>
-				<p class="lessonText">From there you can figure out what each note on the staff is.</p>
-				<br>
+				<p class="lessonText">From there you can figure out what each note on the staff is.</p><br>
 				<p class="lessonText">But where do you go when you reach the top?</p>
 				<img src="../images/lesson1/nospace.jpg" alt="the next note after the last line">
-
 				<hr class="hr">
 
 				<p class="lessonText">This is where <span>Ledger Lines</span> come into play. Ledger lines act like small extensions of the staff when there isn't any room. They follow the same rules as any other line since they are still part of the staff. After the G, comes another line, A, then another space, B, and then another line, and as many more as you need to reach a certain note.</p>
 				<img src="../images/lesson1/ledger.jpg" alt="ledger lines">
-				
 				<hr class="hr">
 				
 				<p class="lessonText">Next is the bass clef (also called the F clef).</p>
 				<p class="lessonText">The staff line between the two dots is known as F. Any note placed on this line becomes F.</p>
 				<p class="lessonText">From there, you can figure out the rest of the notes. That's the only difference between the two clefs: they just change what notes each line or space represent.</p>
 				<img src="../images/lesson1/fclefNotes.jpg" alt="bass clef">
-
 				<hr class="hr">
 
-				<p class="lessonText">The last part for this lesson is the <span>Grand Staff</span>, which is created when you place two staffs on top of each other, the top using a treble clef, and the bottom using a bass clef. This would mean that the notes on both staffs would be played simultaneously.</p>
-				<br>
+				<p class="lessonText">The last part for this lesson is the <span>Grand Staff</span>, which is created when you place two staffs on top of each other, the top using a treble clef, and the bottom using a bass clef. This would mean that the notes on both staffs would be played simultaneously.</p><br>
 				<img src="../images/lesson1/gstaff.jpg" alt="grand staff">
 				<p class="lessonText">The two staffs are "joined" by the imaginary line, a C note, in between them. This is also referred to as "middle C" since it corresponds to the middle staff line on the Grand Staff</p>
 				<img src="../images/lesson1/middlec.jpg" alt="middle c">
+
+				<hr class="hr">
+				<a class="lessonText lessonLinks" href="/learn/lesson2">Lesson 2 &#62;</a>
 			</section>
 		</section>
 	</main>

@@ -53,6 +53,9 @@ router.get('/lesson6', function(req, res) {
 		res.render('lessons/lesson6', {user: req.user});
 	}
 });
+router.get('/lesson6b', function(req, res) {
+		res.render('lessons/lesson6b', {user: req.user});
+});
 router.get('/lesson7', function(req, res) {
 	if(!req.user) {
 		res.redirect('/login');

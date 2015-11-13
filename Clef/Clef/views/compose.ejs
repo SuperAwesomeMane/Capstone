@@ -10,7 +10,11 @@
 		<nav class="authNav">
 			<ul class="social list-inline">
 				<li class="username"><a href="/profile"><%=user.username%></a></li>
-		    	<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+		    	<% if(user.image == "images/default.png") { %>
+					<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+				<% } else { %>
+					<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
+				<% } %>
 			</ul>
 		</nav>
 	</header>

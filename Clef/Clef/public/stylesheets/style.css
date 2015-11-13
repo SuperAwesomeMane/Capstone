@@ -52,7 +52,6 @@ body {
 	margin-bottom: 10px;
 	margin: 0 auto;
 }
-
 .homepage {
 	background: url("../images/clefBack.jpg") no-repeat center center fixed;
 }
@@ -205,6 +204,15 @@ span {
 	font-size: 1.5em;
 	width: 80%;
 	margin: 0 auto;
+}
+.lessonLinks {
+	text-decoration: underline;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.crumb {
+	color: black;
+	text-decoration: underline;
 }
 .learnSection h2, .createSection h2 {
 	font-size: 2em;

@@ -13,13 +13,17 @@
 		<nav class="authNav">
 			<ul class="social list-inline">
 				<li class="username"><a href="/profile"><%=user.username%></a></li>
-				<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+				<% if(user.image == "images/default.png") { %>
+					<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+				<% } else { %>
+					<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
+				<% } %>
 			</ul>
 		</nav>
 	</header>
 	<main class="homeContent">
 		<div class="pageTitle">
-			<h1>Note Modifiers</h1>
+			<h1>Lesson 3: Note Modifiers</h1>
 		</div>
 		<nav class="mainNav">
 			<ul>
@@ -52,6 +56,10 @@
 				<p class="lessonText">Instead of playing each note individually, a slur tells you to play both notes as if they were one note that's changing its pitch.</p>
 				<img src="../images/lesson3/slur.jpg" alt="slur">
 				<p class="lessonText">When playing an instrument, such as a guitar or violin, or any other string instrument, a slur is basically just a sliding motion from one note to the other.</p>
+
+				<hr class="hr">
+				<a class="lessonText lessonLinks" href="/learn/lesson2">&#60; Lesson 2</a>
+				<a class="lessonText lessonLinks" href="/learn/lesson4">Lesson 4 &#62;</a>
 			</section>
 		</section>
 	</main>

@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 var stage;
 var canvasWidth = window.innerWidth;
-var canvasHeight = window.innerHeight;
+var canvasHeight = window.innerHeight - 50;
 
 var canvas, canvasElement;
 
@@ -19,7 +19,7 @@ function main() {
     stage.canvas.width = canvasWidth;
     stage.canvas.height = canvasHeight;
     stage.canvas.x = "0";
-    stage.canvas.y = "50";
+    stage.canvas.y = "0";
 
     var rect = new createjs.Rectangle(0, 0, 100, 100);
     rect.fillStyle = "red";

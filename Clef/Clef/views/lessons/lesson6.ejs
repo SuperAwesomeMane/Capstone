@@ -13,13 +13,17 @@
 		<nav class="authNav">
 			<ul class="social list-inline">
 				<li class="username"><a href="/profile"><%=user.username%></a></li>
-				<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+				<% if(user.image == "images/default.png") { %>
+					<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+				<% } else { %>
+					<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
+				<% } %>
 			</ul>
 		</nav>
 	</header>
 	<main class="homeContent">
 		<div class="pageTitle">
-			<h1>Rhythm &amp; Meter</h1>
+			<h1>Lesson 6.1: Rhythm &amp; Meter</h1>
 		</div>
 		<nav class="mainNav">
 			<ul>
@@ -30,7 +34,69 @@
 		</nav>
 		<section class="lessonFlex">
 			<section class="lessonInfoSection">
-				
+				<p class="lessonText">Every time signature is classified as a certain <span>Meter</span>.</p><br>
+				<p class="lessonText">The different kinds of meter are:</p><br>
+					<span style="font-size: 18px;">
+					    <p>Simple Duple</p>
+					    <p>Simple Triple</p>
+					    <p>Simple Quadruple</p>
+					    <p>Compount Duple</p>
+					    <p>Compount Triple</p>
+					    <p>Compount Quadruple</p>
+					</span>
+				</ul><br>
+				<p class="lessonText">For example, 2/4 time is classified as <span>simple duple</span>.</p><br>
+				<p class="lessonText">"Duple" refers to two beats per measure.</p>
+				<img src="../images/lesson6/simpleDuple.jpg" alt="simple duple meter">
+				<p class="lessonText">"Simple" means that each of these beats can be divided up into two notes.</p>
+				<img src="../images/lesson6/simpleDuple2.jpg" alt="simple duple divided">
+				<p class="lessonText">Other examples of simple duple meters are 2/2 and 2/8.</p>
+				<img src="../images/lesson6/simpleDuples.jpg" alt="other simple duples">
+				<hr class="hr">
+
+				<p class="lessonText">3/4 time is classified as <span>Simple Triple</span>.</p><br>
+				<p class="lessonText">"Triple" refers to three beats per measure. And since it's also simple, it means that each of the notes can be divided into two notes.</p>
+				<img src="../images/lesson6/simpleTriple.jpg" alt="simple triple meter">
+				<p class="lessonText">3/2 and 3/8 are also simple triple meters.</p>
+				<img src="../images/lesson6/simpleTriples.jpg" alt="other simple triples">
+				<hr class="hr">
+
+				<p class="lessonText">4/4 time is classified as <span>Simple Quadruple</span>, since it has four beats per measure. And again, the simple means that each note can be divided into two notes.</p>
+				<img src="../images/lesson6/simpleQuad.jpg" alt="simple quadruple meter">
+				<p class="lessonText">4/2 and 4/8 are other simple quadruple meters.</p>
+				<img src="../images/lesson6/simpleQuads.jpg" alt="other simple quadruples">
+				<p class="lessonText">Time signatures in a simple meter will always have a 2, 3, or 4 for the top number.</p>
+				<img src="../images/lesson6/simples.jpg" alt="all simple duples">
+				<hr class="hr">
+
+				<p class="lessonText">Now since simple meters have beats that can be divided into two notes, beats in <span>Compound</span> meter can be divided into three notes. We'll use 6/8 time as an example.</p>
+				<img src="../images/lesson6/comDuple.jpg" alt="compound duple meter">
+				<p class="lessonText">The 6 eighth notes can be divided in two ways. Either into two beats (which would be compound duple) or three beats (simple triple).</p>
+				<img src="../images/lesson6/comDuple2.jpg" alt="compound duple divided">
+				<p class="lessonText">But since We already said that 3/4 time was a simple triple meter, 6/8 is a <span>compound duple</span>.</p>
+				<img src="../images/lesson6/comDuple3.jpg" alt="actual 6/8 compound duple meter">
+				<p class="lessonText">In the image you can see that the two notes that were divided are the dotted quarter notes at the top, and below them are the three notes that they equal. <span>All compound meters will have some dotted note as its beat.</span></p><br>
+				<p class="lessonText">Any time signature with a 6 on top is a compound duple.</p>
+				<img src="../images/lesson6/comDuples.jpg" alt="other compound duples">
+				<hr class="hr">
+
+				<p class="lessonText">9/8 time is classified as <span>Compound Triple</span>. There are three beats (three dotted quarter notes), which makes the meter triple. And since each beat is made up of three notes, that makes the meter compound.</p>
+				<img src="../images/lesson6/comTriple.jpg" alt="compound triple meter">
+				<p class="lessonText">Any time signature with a 9 on top is a compound triple.</p>
+				<img src="../images/lesson6/comTriples.jpg" alt="other compound triples">
+				<hr class="hr">
+
+				<p class="lessonText">Lastly, 12/8 time is classified as a <span>Compound Quadruple</span>. Quadruple means there are four beats per measure, and each beat is made up of three notes, again, making it compound.</p>
+				<img src="../images/lesson6/comQuad.jpg" alt="compound quadruple meter">
+				<p class="lessonText">Any time signature with a 12 on top is a compound quadruple.</p>
+				<img src="../images/lesson6/comQuads.jpg" alt="other compound quadruples">
+				<hr class="hr">
+
+				<p class="lessonText">What we just talked about are the most basic types of meters, but there are other time signatures which fall into another category called <span>Odd Meters</span>.<br> Click the link for the second part of the lesson.</p><br>
+				<a class="lessonText lessonLinks" href="/learn/lesson6b">Odd Meter</a>
+
+				<hr class="hr">
+				<a class="lessonText lessonLinks" href="/learn/lesson5">&#60; Lesson 5</a>
 			</section>
 		</section>
 	</main>

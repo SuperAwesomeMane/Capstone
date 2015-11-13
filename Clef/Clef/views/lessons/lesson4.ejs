@@ -13,13 +13,17 @@
 		<nav class="authNav">
 			<ul class="social list-inline">
 				<li class="username"><a href="/profile"><%=user.username%></a></li>
-				<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+				<% if(user.image == "images/default.png") { %>
+					<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+				<% } else { %>
+					<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
+				<% } %>
 			</ul>
 		</nav>
 	</header>
 	<main class="homeContent">
 		<div class="pageTitle">
-			<h1>Steps &amp; Accidentals</h1>
+			<h1>Lesson 4: Steps &amp; Accidentals</h1>
 		</div>
 		<nav class="mainNav">
 			<ul>
@@ -53,6 +57,10 @@
 				<p class="lessonText">Since a sharp raises a note's pitch by half a step, a double sharp RAISES a note by a whole step. Same goes for the flat accidental. A double flat LOWERS a note's pitch by a whole step.</p><br>
 				<p class="lessonText">The last accidental is a <span>Natural</span>. Naturals cancel out any other accidental and returns a note to its original white key. Here's a picture of each accidental in order from lowering to raising a pitch.</p>
 				<img src="../images/lesson4/allAcc.jpg" alt="all accidentals">
+
+				<hr class="hr">
+				<a class="lessonText lessonLinks" href="/learn/lesson3">&#60; Lesson 3</a>
+				<a class="lessonText lessonLinks" href="/learn/lesson5">Lesson 5 &#62;</a>
 			</section>
 		</section>
 	</main>

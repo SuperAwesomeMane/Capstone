@@ -1,0 +1,72 @@
+<html>
+<head>
+	<title>Clef - Learn</title>
+	<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/stylesheets/style.css">
+
+	<script src="/lib/jquery/dist/jquery.js"></script>
+	<script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+<body class="lessonPage">
+	<header class="header">
+		<nav class="authNav">
+			<ul class="social list-inline">
+				<li class="username"><a href="/profile"><%=user.username%></a></li>
+				<% if(user.image == "images/default.png") { %>
+					<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
+				<% } else { %>
+					<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
+				<% } %>
+			</ul>
+		</nav>
+	</header>
+	<main class="homeContent">
+		<div class="pageTitle">
+			<h1>Lesson 6.2: Odd Meter</h1>
+		</div>
+		<nav class="mainNav">
+			<ul>
+			    <li><a href="/">Home</a></li>
+			    <li><a href="/learn">Learn</a></li>
+			    <li><a href="/create">Create</a></li>
+			</ul>
+		</nav>
+		<section class="lessonFlex">
+			<section class="lessonInfoSection">
+				<a class="crumb" href="/learn/lesson6">Back</a><br><br>
+				
+				<p class="lessonText">An <span>Odd Meter</span> is a meter which contains both simple and compound beats. We'll start with 5/8 time. It contains one simple beat and one compound beat.</p>
+				<img src="../images/lesson6/58.jpg" alt="5/8 odd meter">
+				<p class="lessonText">The order of the beats does not matter. The simple beat OR the compound beat can come first, as long as they equal the same amount of beats per measure. It's basically the same rule as adding two numbers in addition.</p>
+				<hr class="hr">
+
+				<p class="lessonText">Next is 7/8 time. This time contains two simple beats and one compound.</p>
+				<img src="../images/lesson6/78.jpg" alt="7/8 odd meter">
+				<p class="lessonText">The order still does not matter, even if the compound beat is in the middle.</p>
+				<img src="../images/lesson6/78mid.jpg" alt="7/8 odd meter with compound beat in the middle">
+				<hr class="hr">
+
+				<p class="lessonText">8/8 time contains two compound beats and one simple beat.</p>
+				<img src="../images/lesson6/88.jpg" alt="8/8 odd meter">
+				<hr class="hr">
+
+				<p class="lessonText">10/8 time contains two compound beats, as well as two simple beats.</p>
+				<img src="../images/lesson6/108.jpg" alt="10/8 odd meter">
+				<hr class="hr">
+
+				<p class="lessonText">Finally, 11/8 time contains three compound beats and only one simple beat.</p>
+				<img src="../images/lesson6/118.jpg" alt="11/8 odd meter"><br>
+				
+				<a class="lessonText lessonLinks" href="/learn/lesson6">&#60; Rhythm &amp; Meter</a>
+
+				<hr class="hr">
+				<a class="lessonText lessonLinks" href="/learn/lesson7">Lesson 7 &#62;</a>
+			</section>
+		</section>
+	</main>
+	<footer class="site-footer">
+		<p>&copy; Copyright 2015</p>
+	</footer>
+</body>
+</html
