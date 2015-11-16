@@ -66,6 +66,7 @@ app.post('/register', function(req, res) {
   newUser.image = "images/default.png";
   newUser.password = req.body.password;
   newUser.email = req.body.email;
+  newUser.lessonsCompleted = 0;
 
   newUser.save();
 

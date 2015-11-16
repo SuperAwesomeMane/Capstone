@@ -14,6 +14,9 @@ var UserSchema = Schema({
 	email: {
 		type: String
 	},
+	lessonsCompleted: {
+		type: Number
+	},
 	facebook: {
 		type: Object
 	},

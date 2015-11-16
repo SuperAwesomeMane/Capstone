@@ -56,9 +56,9 @@ body {
 	background: url("../images/clefBack.jpg") no-repeat center center fixed;
 }
 .lessonPage {
-	background: url("../images/lessonBack.jpg") no-repeat center center fixed;
+	background: linear-gradient(#8AB0CE, #6384A5, #3F329F);
 }
-.homepage, .lessonPage {
+.homepage {
 	-webkit-background-size: cover;
   	-moz-background-size: cover;
   	-o-background-size: cover;
@@ -188,14 +188,18 @@ span {
 }
 .lessonInfoSection {
 	background-color: white;
-	border: 3px solid black;
+	/*border: 3px solid black;*/
 	width: 60%;
 	height: auto;
 	margin: 0 auto;
 	margin-bottom: 100px;
 	padding: 20px;
+	border-radius: 20px;
 	color: black;
 	text-align: center;
+	-moz-box-shadow:    0px 0px 80px 5px #000;
+  	-webkit-box-shadow: 0px 0px 80px 5px #000;
+  	box-shadow:         0px 0px 80px 5px #000;
 }
 .lessonInfoSection img {
 	margin: 30px;
