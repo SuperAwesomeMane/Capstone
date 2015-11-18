@@ -1,16 +1,16 @@
-
-var stage, FPS, frameCount, gameTimer;
-var canvasWidth = window.innerWidth;
-var canvasHeight = window.innerHeight - 50;
+var stage, gameTimer;
+var FPS = 30, frameCount = 0;
+var CANVAS_WIDTH = window.innerWidth;
+var CANVAS_HEIGHT = window.innerHeight - 50;
 
 var canvas, canvasElement;
 
 var staff;
-var wholeBtn, wholeBtnSelect, wholeBtnSelected;
-var halfBtn, halfBtnSelect, halfBtnSelected;
-var quarterBtn, quarterBtnSelect, quarterBtnSelected;
-var eighthBtn, eighthBtnSelect, eighthBtnSelected;
-var sixteenthBtn, sixteenthBtnSelect, sixteenthBtnSelected;
+var wholeBtnSelect, wholeBtnSelected;
+var halfBtnSelect, halfBtnSelected;
+var quarterBtnSelect, quarterBtnSelected;
+var eighthBtnSelect, eighthBtnSelected;
+var sixteenthBtnSelect, sixteenthBtnSelected;
 
 manifest = [
     {src: "staff.jpg", id: "staff"},
@@ -26,10 +26,17 @@ manifest = [
     {src: "sixteenthBtnSelected.jpg", id: "sixteenthBtnSelected"}
 ];
 
+var noteObject = {
+    type: String,
+    value: Number,
+    duration: Number /* seconds */
+};
+
 var queue;
 
 function loadComplete(evt) {
     staff = new createjs.Bitmap(queue.getResult("staff"));
+
     wholeBtnSelect = new createjs.Bitmap(queue.getResult("wholeBtnSelect"));
     wholeBtnSelected = new createjs.Bitmap(queue.getResult("wholeBtnSelected"));
 
@@ -44,8 +51,10 @@ function loadComplete(evt) {
 
     sixteenthBtnSelect = new createjs.Bitmap(queue.getResult("sixteenthBtnSelect"));
     sixteenthBtnSelected = new createjs.Bitmap(queue.getResult("sixteenthBtnSelected"));
-    // console.log("images created"); (o)
+    console.log("Images Loaded.");
+    drawTools();
 }
+
 function loadFiles() {
     queue = new createjs.LoadQueue(true, "/images/createAssets/");
     queue.on("complete", loadComplete, this);
@@ -54,17 +63,14 @@ function loadFiles() {
 
 function setupCanvas() {
     stage = new createjs.Stage("canvas");
-    stage.canvas.width = canvasWidth;
-    stage.canvas.height = canvasHeight;
+    stage.canvas.width = CANVAS_WIDTH;
+    stage.canvas.height = CANVAS_HEIGHT;
     stage.canvas.x = "0";
     stage.canvas.y = "0";
     stage.enableMouseOver();
-    drawToolbar();
-}
 
-function drawToolbar() {
     var rectangle = new createjs.Shape();
-    rectangle.graphics.beginFill("#818181").drawRect(0, 0, 300, canvasHeight);
+    rectangle.graphics.beginFill("#818181").drawRect(0, 0, 300, CANVAS_HEIGHT);
     stage.addChild(rectangle);
 
     var toolHeader = new createjs.Text("Tools", "2em Arial", "#FFF");
@@ -75,35 +81,116 @@ function drawToolbar() {
     var underline = new createjs.Shape();
     rectangle.graphics.beginFill("#FFFFFF").drawRect(10, 40, 280, 3);
     stage.addChild(underline);
+    loadFiles();
+}
 
+var selectedNote = 'wholeNote';
+
+function switchNote() {
+
+        switch(selectedNote) {
+            case 'wholeNote':    
+            stage.removeChild(halfBtnSelected);
+            stage.removeChild(quarterBtnSelected);
+            stage.removeChild(eighthBtnSelected);
+            stage.removeChild(sixteenthBtnSelected);
+            wholeBtnSelected.x = 15;
+            wholeBtnSelected.y = 50;
+            stage.addChild(wholeBtnSelected);
+            break;
+
+            case 'halfNote':
+            stage.removeChild(wholeBtnSelected);
+            stage.removeChild(quarterBtnSelected);
+            stage.removeChild(eighthBtnSelected);
+            stage.removeChild(sixteenthBtnSelected);
+            halfBtnSelected.x = 70;    
+            halfBtnSelected.y = 50;
+            stage.addChild(halfBtnSelected);
+            break;
+
+            case 'quarterNote':
+            stage.removeChild(wholeBtnSelected);
+            stage.removeChild(halfBtnSelected);
+            stage.removeChild(eighthBtnSelected);
+            stage.removeChild(sixteenthBtnSelected);
+            quarterBtnSelected.x = 125;
+            quarterBtnSelected.y = 50;
+            stage.addChild(quarterBtnSelected);
+            break;
+
+            case 'eighthNote':
+            stage.removeChild(wholeBtnSelected);
+            stage.removeChild(halfBtnSelected);
+            stage.removeChild(quarterBtnSelected);
+            stage.removeChild(sixteenthBtnSelected);
+            eighthBtnSelected.x = 180;
+            eighthBtnSelected.y = 50;
+            stage.addChild(eighthBtnSelected);
+            break;
+
+            case 'sixteenthNote':
+            stage.removeChild(wholeBtnSelected);
+            stage.removeChild(halfBtnSelected);
+            stage.removeChild(quarterBtnSelected);
+            stage.removeChild(eighthBtnSelected);
+            sixteenthBtnSelected.x = 235;
+            sixteenthBtnSelected.y = 50;
+            stage.addChild(sixteenthBtnSelected);
+            break;
+        }
+
+
+}
+
+function drawTools() {
+    console.log("entered drawTools function");
     staff.x = 350;
     staff.y = 50;
     stage.addChild(staff);
     
-    wholeBtn = wholeBtnSelect;
-    wholeBtn.x = 15;
-    wholeBtn.y = 50;
-    stage.addChild(wholeBtn);
+    wholeBtnSelect.x = 15;
+    wholeBtnSelect.y = 50;
+    stage.addChild(wholeBtnSelect);
+    wholeBtnSelected.x = 15;
+    wholeBtnSelected.y = 50;
+    stage.addChild(wholeBtnSelected);
+    wholeBtnSelect.on("click", function(evt) {
+        selectedNote = 'wholeNote';
+        switchNote();
+    });
 
-    halfBtn = halfBtnSelect;
-    halfBtn.x = 70;
-    halfBtn.y = 50;
-    stage.addChild(halfBtn);
+    halfBtnSelect.x = 70;
+    halfBtnSelect.y = 50;
+    stage.addChild(halfBtnSelect);
+    halfBtnSelect.on("click", function(evt){
+        selectedNote = 'halfNote';
+        switchNote();
+    });
 
-    quarterBtn = quarterBtnSelect;
-    quarterBtn.x = 125;
-    quarterBtn.y = 50;
-    stage.addChild(quarterBtn);
+    quarterBtnSelect.x = 125;
+    quarterBtnSelect.y = 50;
+    stage.addChild(quarterBtnSelect);
+    quarterBtnSelect.on("click", function(evt) {
+        selectedNote = 'quarterNote';
+        switchNote();
+    });
 
-    eighthBtn = eighthBtnSelect;
-    eighthBtn.x = 180;
-    eighthBtn.y = 50;
-    stage.addChild(eighthBtn);
+    eighthBtnSelect.x = 180;
+    eighthBtnSelect.y = 50;
+    stage.addChild(eighthBtnSelect);
+    eighthBtnSelect.on("click", function(evt) {
+        selectedNote = 'eighthNote';
+        switchNote();
+    });
 
-    sixteenthBtn = sixteenthBtnSelect;
-    sixteenthBtn.x = 235;
-    sixteenthBtn.y = 50;
-    stage.addChild(sixteenthBtn);
+    sixteenthBtnSelect.x = 235;
+    sixteenthBtnSelect.y = 50;
+    stage.addChild(sixteenthBtnSelect);
+    sixteenthBtnSelect.on("click", function(evt) {
+        selectedNote = 'sixteenthNote';
+        switchNote();
+    });
 }
 
 function resetGameTimer() {
@@ -113,23 +200,20 @@ function runGameTimer() {
     frameCount += 1;
     if(frameCount%(FPS/10) === 0) {
         gameTimer = frameCount/(FPS);
+        // console.log(gameTimer);
     }
 }
 
 function loop() {
     stage.update();
-    // drawToolbar();
     runGameTimer();
 }
-createjs.Ticker.addEventListener("tick", loop);
-createjs.Ticker.setFPS(FPS);
 
 function main() {
-    loadFiles();
-    resetGameTimer();
-    FPS = 60;
-
     setupCanvas();
+    loadFiles();
 }
 
-main();
+resetGameTimer();
+createjs.Ticker.addEventListener("tick", loop);
+createjs.Ticker.setFPS(FPS);
