@@ -16,28 +16,31 @@ var showNote1,showNote2,showNote3,showNote4,showNote5,showNote6,showNote7,showNo
 showNote9,showNote10,showNote11,showNote12,showNote13,showNote14,showNote15,
 showNote16,showNote17,showNote18,showNote19;
 
-var downBtn, upBtn, previewBtn, addBtn, playBtn, undoBtn;
+var downBtn, upBtn, previewBtn, addBtn, playBtn, undoBtn, saveBtn, loadBtn;
+var staffY = 0;
+var KEYCODE_UP = 38;
+var KEYCODE_DOWN = 40;
 
-var line1 = 220;
-var line2 = 210;
-var line3 = 195;
-var line4 = 185;
-var line5 = 175;
-var line6 = 160;
-var line7 = 150;
-var line8 = 135;
-var line9 = 120;
-var line10 = 105;
-var line11 = 90;
-var line12 = 75;
-var line13 = 60;
-var line14 = 50;
-var line15 = 35;
-var line16 = 15;
-var line17 = 5;
-var line18= -5;
-var line19 = -15;
-var firstX = 500;
+var line1 = 290;
+var line2 = 280;
+var line3 = 265;
+var line4 = 255;
+var line5 = 245;
+var line6 = 235;
+var line7 = 220;
+var line8 = 205;
+var line9 = 190;
+var line10 = 175;
+var line11 = 160;
+var line12 = 145;
+var line13 = 130;
+var line14 = 115;
+var line15 = 105;
+var line16 = 95;
+var line17 = 85;
+var line18= 75;
+var line19 = 65;
+var firstX = 550;
 
 var currentNote = 1;
 var noteArray = [];
@@ -67,6 +70,8 @@ manifest = [
     {src: "addBtn.jpg", id: "addBtn"},
     {src: "playBtn.jpg", id: "playBtn"},
     {src: "undoBtn.jpg", id: "undoBtn"},
+    {src: "saveBtn.jpg", id: "saveBtn"},
+    {src: "loadBtn.jpg", id: "loadBtn"},
 
     {src: "showNote1.png", id: "showNote1"},
     {src: "showNote2.png", id: "showNote2"},
@@ -131,16 +136,6 @@ function loadComplete(evt) {
     });
 
     note = new createjs.Sprite(noteSheet);
-    // note.x = 550;
-    // note.y = 50;
-    // note.scaleY = -1;
-    // note.sound = "note6Quarter";
-    // note.gotoAndPlay("Quarter");
-    // stage.addChild(note);
-
-    // note.on("click", function(evt) {
-        // createjs.Sound.play(note.sound);
-    // });
 
     staff = new createjs.Bitmap(queue.getResult("staff"));
     wholeBtnSelect = new createjs.Bitmap(queue.getResult("wholeBtnSelect"));
@@ -160,6 +155,8 @@ function loadComplete(evt) {
     addBtn = new createjs.Bitmap(queue.getResult("addBtn"));
     playBtn = new createjs.Bitmap(queue.getResult("playBtn"));
     undoBtn = new createjs.Bitmap(queue.getResult("undoBtn"));
+    saveBtn = new createjs.Bitmap(queue.getResult("saveBtn"));
+    loadBtn = new createjs.Bitmap(queue.getResult("loadBtn"));
 
     showNote1 = new createjs.Bitmap(queue.getResult("showNote1"));
     showNote2 = new createjs.Bitmap(queue.getResult("showNote2"));
@@ -298,6 +295,7 @@ function drawTools() {
     stage.addChild(undoBtn);
     undoBtn.on("click", function(evt) {
         stage.removeChild(noteArray.pop());
+        checkNoteCount();
     });
 
     addBtn.x = 100;
@@ -322,7 +320,117 @@ function drawTools() {
         });
     });
 
+    saveBtn.x = 100;
+    saveBtn.y = 400;
+    stage.addChild(saveBtn);
+
+    var nArray = [];
+
+    saveBtn.on("click", function(evt) {
+        noteArray.forEach(function(n){
+            var obj = {
+                noteType: n.noteType,
+                noteValue: n.noteValue,
+                lineNum: n.lineNum,
+                x: n.x,
+                y: n.y
+            };
+            nArray.push(obj);
+        });
+
+        var textToWrite = JSON.stringify(nArray);
+        
+        // loading logic
+            // var blah = JSON.parse(textFromFileLoaded);
+            // console.log("printing loaded file");
+            // console.log(blah[0].type);
+            // blah.forEach(function(n){
+            //     var newNote = note.clone();
+            //     newNote.gotoAndPlay(n.noteType);
+            //     newNote.noteValue = n.noteValue;
+            //     newNote.noteType = n.noteType;
+            //     newNote.lineNum = n.lineNum;
+            //     newNote.regX = 17;
+            //     newNote.regY = 70;
+            //     newNote.x = n.x;
+            //     newNote.y = n.y + 500;
+            //     newNote.sound = "note" + newNote.lineNum + selectedNote;
+            //     newNote.on("click", function(evt) {
+            //         createjs.Sound.play(newNote.sound);
+            //     });
+            //     stage.addChild(newNote);
+            // });
+
+        // rest of saving logic
+            var textFileAsBlob = new Blob([textToWrite], {type:'application/json'});
+            console.log("blob: " + textFileAsBlob);
+            var fileNameToSaveAs = "songNameHere.json";
+            var downloadLink = document.createElement("a");
+            downloadLink.download = fileNameToSaveAs;
+            downloadLink.innerHTML = "Download File";
+            if (window.webkitURL != null)
+            {
+                // Chrome allows the link to be clicked
+                // without actually adding it to the DOM.
+                downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+            }
+            else
+            {
+                // Firefox requires the link to be added to the DOM
+                // before it can be clicked.
+                downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+                downloadLink.onclick = destroyClickedElement;
+                downloadLink.style.display = "none";
+                document.body.appendChild(downloadLink);
+            }
+            downloadLink.click();
+    });
+
+    loadBtn.x = 100;
+    loadBtn.y = 460;
+    stage.addChild(loadBtn);
+    loadBtn.on("click", function(evt) {
+        var fileToLoad = document.getElementById("fileToLoad").value;
+        var fileParts = fileToLoad.split('\\');
+        var fileName = fileParts[fileParts.length -1];
+
+        var fileReader = new FileReader();
+        var textFromFileLoaded = null;
+            console.log("bookmark: before function");
+        fileReader.onload = function(fileLoadedEvent) 
+        {
+            console.log("bookmark: entered function");
+            textFromFileLoaded = fileLoadedEvent.target.result;
+            console.log("bookmark: " + textFromFileLoaded);
+            document.getElementById("inputTextToSave").value = textFromFileLoaded;
+        };
+            
+        var jsonData = JSON.parse(textFromFileLoaded);
+        console.log("printing loaded file");
+        console.log(jsonData);
+        jsonData.forEach(function(n){
+            var newNote = note.clone();
+            newNote.gotoAndPlay(n.noteType);
+            newNote.noteValue = n.noteValue;
+            newNote.noteType = n.noteType;
+            newNote.lineNum = n.lineNum;
+            newNote.regX = 17;
+            newNote.regY = 70;
+            newNote.x = n.x;
+            newNote.y = n.y + 500;
+            newNote.sound = "note" + newNote.lineNum + selectedNote;
+            newNote.on("click", function(evt) {
+                createjs.Sound.play(newNote.sound);
+            });
+            stage.addChild(newNote);
+        });
+    });
+
     checkCurrentNote();
+}
+
+function destroyClickedElement(event) {
+    document.body.removeChild(event.target);
 }
 
 function switchNote() {
@@ -639,33 +747,36 @@ function checkCurrentNote() {
 }
 
 function checkNoteCount() {
-
+    var sum = 0;
+    noteArray.forEach(function(item){
+        sum += item.noteValue;
+    });
+    console.log("sum: " + sum);
 }
 
 function checkArrayLength() {
     var arrayLength = noteArray.length;
-    var nextX = arrayLength * 60;
-    return nextX + firstX;
+    var nextX = arrayLength * 55;
+    var newX = nextX + firstX;
+    return newX;
 }
 
 function addNewNote() {
-    console.log(currentNote);
-            var newNote = note.clone();
-            newNote.gotoAndPlay(selectedNote);
-            newNote.noteValue = getNoteValue();
-            newNote.noteType = selectedNote;
-            newNote.sound = "note" + currentNote + selectedNote;
-            
-            // console.log("note value: " + newNote.noteValue);
-            
-            noteArray.push(newNote);
-            console.log("array length: " + noteArray.length);
+    var newNote = note.clone();
+    newNote.gotoAndPlay(selectedNote);
+    newNote.noteValue = getNoteValue();
+    newNote.noteType = selectedNote;
+    newNote.lineNum = currentNote;
+    newNote.regX = 17;
+    newNote.regY = 70;
+    newNote.sound = "note" + newNote.lineNum + selectedNote;
+    // console.log("note value: " + newNote.noteValue);
 
-            newNote.on("click", function(evt) {
-                createjs.Sound.play(newNote.sound);
-            });
-            
-            checkNoteCount();
+    console.log("array length: " + noteArray.length);
+
+    newNote.on("click", function(evt) {
+        createjs.Sound.play(newNote.sound);
+    });
 
     switch (currentNote) {
         case 1:
@@ -674,8 +785,11 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line1;
+            newNote.y = line1 + staffY;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 2:
             if(noteArray.length === 0) {
@@ -683,8 +797,11 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line2;
+            newNote.y = line2 + staffY;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 3:
             if(noteArray.length === 0) {
@@ -692,8 +809,11 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line3;
+            newNote.y = line3 + staffY;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 4:
             if(noteArray.length === 0) {
@@ -701,8 +821,11 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line4;
+            newNote.y = line4 + staffY;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 5:
             if(noteArray.length === 0) {
@@ -710,8 +833,11 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line5;
+            newNote.y = line5 + staffY;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 6:
             if(noteArray.length === 0) {
@@ -719,8 +845,11 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line6;
+            newNote.y = line6 + staffY;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 7:
             if(noteArray.length === 0) {
@@ -728,8 +857,11 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line7;
+            newNote.y = line7 + staffY;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 8:
             if(noteArray.length === 0) {
@@ -737,8 +869,11 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line8;
+            newNote.y = line8 + staffY;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 9:
             if(noteArray.length === 0) {
@@ -746,8 +881,11 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line9;
+            newNote.y = line9 + staffY;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 10:
             if(noteArray.length === 0) {
@@ -755,8 +893,13 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line10;
+            newNote.y = line10 + staffY;
+            newNote.scaleY = -1;
+            newNote.scaleX = -1;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 11:
             if(noteArray.length === 0) {
@@ -764,8 +907,13 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line11;
+            newNote.y = line11 + staffY;
+            newNote.scaleY = -1;
+            newNote.scaleX = -1;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 12:
             if(noteArray.length === 0) {
@@ -773,8 +921,13 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line12;
+            newNote.y = line12 + staffY;
+            newNote.scaleY = -1;
+            newNote.scaleX = -1;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 13:
             if(noteArray.length === 0) {
@@ -782,8 +935,13 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line13;
+            newNote.y = line13 + staffY;
+            newNote.scaleY = -1;
+            newNote.scaleX = -1;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 14:
             if(noteArray.length === 0) {
@@ -791,8 +949,13 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line14;
+            newNote.y = line14 + staffY;
+            newNote.scaleY = -1;
+            newNote.scaleX = -1;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 15:
             if(noteArray.length === 0) {
@@ -800,8 +963,13 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line15;
+            newNote.y = line15 + staffY;
+            newNote.scaleY = -1;
+            newNote.scaleX = -1;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 16:
             if(noteArray.length === 0) {
@@ -809,8 +977,13 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line16;
+            newNote.y = line16 + staffY;
+            newNote.scaleY = -1;
+            newNote.scaleX = -1;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 17:
             if(noteArray.length === 0) {
@@ -818,8 +991,13 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line17;
+            newNote.y = line17 + staffY;
+            newNote.scaleY = -1;
+            newNote.scaleX = -1;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 18:
             if(noteArray.length === 0) {
@@ -827,8 +1005,13 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line18;
+            newNote.y = line18 + staffY;
+            newNote.scaleY = -1;
+            newNote.scaleX = -1;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
         case 19:
             if(noteArray.length === 0) {
@@ -836,26 +1019,37 @@ function addNewNote() {
             } else {
                 newNote.x = checkArrayLength();
             }
-            newNote.y = line19;
+            newNote.y = line19 + staffY;
+            newNote.scaleY = -1;
+            newNote.scaleX = -1;
             stage.addChild(newNote);
+            checkNoteCount();
+            noteArray.push(newNote);
+
         break;
 
         stage.addChild(shownNote);
     }
-
-    var sum = 0;
-    noteArray.forEach(function(item){
-        sum += item.noteValue;
-        console.log("sum: " + sum);
-        if(sum % 4 === 0) {
-            var staffClone = staff.clone();
-            staffClone.x = staff.x;
-            staffClone.y = staff.y + 300;
-            stage.addChild(staffClone);
-
-        }
-    });
 }
+
+function keyPressed(event) {
+        switch(event.keyCode) {
+            case KEYCODE_UP: 
+                currentNote += 1;
+                if(currentNote > 19) {
+                    currentNote -= 1;
+                }
+                checkCurrentNote();
+                break;
+            case KEYCODE_DOWN: 
+                currentNote -= 1;
+                if(currentNote < 1) {
+                    currentNote += 1;
+                }
+                checkCurrentNote();
+                break;
+        }
+    }
 
 function resetGameTimer() {
     gameTimer = 0;
@@ -875,6 +1069,7 @@ function loop() {
 function main() {
     setupCanvas();
     loadFiles();
+    this.document.onkeydown = keyPressed;
 }
 
 resetGameTimer();

@@ -8,7 +8,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var learn = require('./routes/learn');
