@@ -24,6 +24,7 @@ module.exports = function() {
                     user.email = profile.emails[0].value;
                     user.image = profile._json.image.url;
                     user.username = profile.displayName;
+                    user.lessonsCompleted = 0;
 
                     console.log('username: ' + user.username);
                     console.log('image: ' + user.image);

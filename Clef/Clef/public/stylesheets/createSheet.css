@@ -14,6 +14,15 @@ body {
 	height: 50px;
 	background-color: rgba(0,0,0,.8);
 }
+.fileSaver {
+	margin-left: 100px;
+	margin-top: 3px;
+	margin-right: 20px;
+}
+.fileLoader {
+	margin-top: 3px;
+	margin-right: -10px;
+}
 .createNav a {
   color: #00B7FF;
 }

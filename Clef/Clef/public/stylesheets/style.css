@@ -310,12 +310,17 @@ span {
 	flex-grow: 0;
 	background: rgba(185,231,255,.5);
 	min-width: 400px;
-	height: 350px;
+	height: auto;
 	margin: 0 auto;
 	margin: 20px;
 	padding: 20px;
 	text-align: center;
 	color: black;
+}
+.createThumb {
+	margin: 10px;
+	border: 3px solid black;
+	border-radius: 10px;
 }
 
 .profileFlex {
@@ -328,7 +333,7 @@ span {
 }
 .profileSection {
 	background: rgba(185,231,255,.5);
-	min-width: 35%;
+	min-width: 400px;
 	height: 450px;
 	margin: 0 auto;
 	margin: 20px;

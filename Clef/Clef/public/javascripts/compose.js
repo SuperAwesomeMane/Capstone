@@ -1,49 +1,50 @@
-var stage, gameTimer;
-var FPS = 30, frameCount = 0;
-var CANVAS_WIDTH = window.innerWidth;
-var CANVAS_HEIGHT = window.innerHeight - 50;
+// Variable Setup
+    var stage, gameTimer;
+    var FPS = 30, frameCount = 0;
+    var CANVAS_WIDTH = window.innerWidth;
+    var CANVAS_HEIGHT = window.innerHeight - 50;
 
-var canvas, canvasElement;
+    var canvas, canvasElement;
 
-var staff;
-var wholeBtnSelect, wholeBtnSelected;
-var halfBtnSelect, halfBtnSelected;
-var quarterBtnSelect, quarterBtnSelected;
-var eighthBtnSelect, eighthBtnSelected;
-var sixteenthBtnSelect, sixteenthBtnSelected;
+    var staff;
+    var wholeBtnSelect, wholeBtnSelected;
+    var halfBtnSelect, halfBtnSelected;
+    var quarterBtnSelect, quarterBtnSelected;
+    var eighthBtnSelect, eighthBtnSelected;
+    var sixteenthBtnSelect, sixteenthBtnSelected;
 
-var showNote1,showNote2,showNote3,showNote4,showNote5,showNote6,showNote7,showNote8,
-showNote9,showNote10,showNote11,showNote12,showNote13,showNote14,showNote15,
-showNote16,showNote17,showNote18,showNote19;
+    var showNote1,showNote2,showNote3,showNote4,showNote5,showNote6,showNote7,showNote8,
+    showNote9,showNote10,showNote11,showNote12,showNote13,showNote14,showNote15,
+    showNote16,showNote17,showNote18,showNote19;
 
-var downBtn, upBtn, previewBtn, addBtn, playBtn, undoBtn, saveBtn, loadBtn;
-var staffY = 0;
-var KEYCODE_UP = 38;
-var KEYCODE_DOWN = 40;
+    var downBtn, upBtn, previewBtn, addBtn, playBtn, undoBtn;
+    var staffY = 0;
+    var KEYCODE_UP = 38;
+    var KEYCODE_DOWN = 40;
 
-var line1 = 290;
-var line2 = 280;
-var line3 = 265;
-var line4 = 255;
-var line5 = 245;
-var line6 = 235;
-var line7 = 220;
-var line8 = 205;
-var line9 = 190;
-var line10 = 175;
-var line11 = 160;
-var line12 = 145;
-var line13 = 130;
-var line14 = 115;
-var line15 = 105;
-var line16 = 95;
-var line17 = 85;
-var line18= 75;
-var line19 = 65;
-var firstX = 550;
+    var line1 = 290;
+    var line2 = 280;
+    var line3 = 265;
+    var line4 = 255;
+    var line5 = 245;
+    var line6 = 235;
+    var line7 = 220;
+    var line8 = 205;
+    var line9 = 190;
+    var line10 = 175;
+    var line11 = 160;
+    var line12 = 145;
+    var line13 = 130;
+    var line14 = 115;
+    var line15 = 105;
+    var line16 = 95;
+    var line17 = 85;
+    var line18= 75;
+    var line19 = 65;
+    var firstX = 550;
 
-var currentNote = 1;
-var noteArray = [];
+    var currentNote = 1;
+    var noteArray = [];
 
 manifest = [
     // SPRITES
@@ -70,8 +71,6 @@ manifest = [
     {src: "addBtn.jpg", id: "addBtn"},
     {src: "playBtn.jpg", id: "playBtn"},
     {src: "undoBtn.jpg", id: "undoBtn"},
-    {src: "saveBtn.jpg", id: "saveBtn"},
-    {src: "loadBtn.jpg", id: "loadBtn"},
 
     {src: "showNote1.png", id: "showNote1"},
     {src: "showNote2.png", id: "showNote2"},
@@ -95,28 +94,27 @@ manifest = [
 
     // SOUNDS
 
-        // A Notes
-        {src: "gLowWhole.ogg", id: "note1Whole"},    {src: "gLowHalf.ogg", id: "note1Half"},      {src: "gLowQuarter.ogg", id: "note1Quarter"},    {src: "gLowEighth.ogg", id: "note1Eighth"},      {src: "gLowSixt.ogg", id: "note1Sixt"},
-        {src: "aLowWhole.ogg", id: "note2Whole"},    {src: "aLowHalf.ogg", id: "note2Half"},      {src: "aLowQuarter.ogg", id: "note2Quarter"},    {src: "aLowEighth.ogg", id: "note2Eighth"},      {src: "aLowSixt.ogg", id: "note2Sixt"},
-        {src: "bLowWhole.ogg", id: "note3Whole"},    {src: "bLowHalf.ogg", id: "note3Half"},      {src: "bLowQuarter.ogg", id: "note3Quarter"},    {src: "bLowEighth.ogg", id: "note3Eighth"},      {src: "bLowSixt.ogg", id: "note3Sixt"},
-        {src: "cLowWhole.ogg", id: "note4Whole"},    {src: "cLowHalf.ogg", id: "note4Half"},      {src: "cLowQuarter.ogg", id: "note4Quarter"},    {src: "cLowEighth.ogg", id: "note4Eighth"},      {src: "cLowSixt.ogg", id: "note4Sixt"},
-        {src: "dLowWhole.ogg", id: "note5Whole"},    {src: "dLowHalf.ogg", id: "note5Half"},      {src: "dLowQuarter.ogg", id: "note5Quarter"},    {src: "dLowEighth.ogg", id: "note5Eighth"},      {src: "dLowSixt.ogg", id: "note5Sixt"},
-        {src: "eLowWhole.ogg", id: "note6Whole"},    {src: "eLowHalf.ogg", id: "note6Half"},      {src: "eLowQuarter.ogg", id: "note6Quarter"},    {src: "eLowEighth.ogg", id: "note6Eighth"},      {src: "eLowSixt.ogg", id: "note6Sixt"},
-        {src: "fLowWhole.ogg", id: "note7Whole"},    {src: "fLowHalf.ogg", id: "note7Half"},      {src: "fLowQuarter.ogg", id: "note7Quarter"},    {src: "fLowEighth.ogg", id: "note7Eighth"},      {src: "fLowSixt.ogg", id: "note7Sixt"},
-        
-        {src: "gMidWhole.ogg", id: "note8Whole"},    {src: "gMidHalf.ogg", id: "note8Half"},      {src: "gMidQuarter.ogg", id: "note8Quarter"},    {src: "gMidEighth.ogg", id: "note8Eighth"},      {src: "gMidSixt.ogg", id: "note8Sixt"},
-        {src: "aMidWhole.ogg", id: "note9Whole"},    {src: "aMidHalf.ogg", id: "note9Half"},      {src: "aMidQuarter.ogg", id: "note9Quarter"},    {src: "aMidEighth.ogg", id: "note9Eighth"},      {src: "aMidSixt.ogg", id: "note9Sixt"},
-        {src: "bMidWhole.ogg", id: "note10Whole"},   {src: "bMidHalf.ogg", id: "note10Half"},     {src: "bMidQuarter.ogg", id: "note10Quarter"},   {src: "bMidEighth.ogg", id: "note10Eighth"},     {src: "bMidSixt.ogg", id: "note10Sixt"},
-        {src: "cMidWhole.ogg", id: "note11Whole"},   {src: "cMidHalf.ogg", id: "note11Half"},     {src: "cMidQuarter.ogg", id: "note11Quarter"},   {src: "cMidEighth.ogg", id: "note11Eighth"},     {src: "cMidSixt.ogg", id: "note11Sixt"},
-        {src: "dMidWhole.ogg", id: "note12Whole"},   {src: "dMidHalf.ogg", id: "note12Half"},     {src: "dMidQuarter.ogg", id: "note12Quarter"},   {src: "dMidEighth.ogg", id: "note12Eighth"},     {src: "dMidSixt.ogg", id: "note12Sixt"},
-        {src: "eMidWhole.ogg", id: "note13Whole"},   {src: "eMidHalf.ogg", id: "note13Half"},     {src: "eMidQuarter.ogg", id: "note13Quarter"},   {src: "eMidEighth.ogg", id: "note13Eighth"},     {src: "eMidSixt.ogg", id: "note13Sixt"},
-        {src: "fMidWhole.ogg", id: "note14Whole"},   {src: "fMidHalf.ogg", id: "note14Half"},     {src: "fMidQuarter.ogg", id: "note14Quarter"},   {src: "fMidEighth.ogg", id: "note14Eighth"},     {src: "fMidSixt.ogg", id: "note14Sixt"},
-        
-        {src: "gHighWhole.ogg", id: "note15Whole"},  {src: "gHighHalf.ogg", id: "note15Half"},    {src: "gHighQuarter.ogg", id: "note15Quarter"},  {src: "gHighEighth.ogg", id: "note15Eighth"},    {src: "gHighSixt.ogg", id: "note15Sixt"},
-        {src: "aHighWhole.ogg", id: "note16Whole"},  {src: "aHighHalf.ogg", id: "note16Half"},    {src: "aHighQuarter.ogg", id: "note16Quarter"},  {src: "aHighEighth.ogg", id: "note16Eighth"},    {src: "aHighSixt.ogg", id: "note16Sixt"},
-        {src: "bHighWhole.ogg", id: "note17Whole"},  {src: "bHighHalf.ogg", id: "note17Half"},    {src: "bHighQuarter.ogg", id: "note17Quarter"},  {src: "bHighEighth.ogg", id: "note17Eighth"},    {src: "bHighSixt.ogg", id: "note17Sixt"},
-        {src: "cHighWhole.ogg", id: "note18Whole"},  {src: "cHighHalf.ogg", id: "note18Half"},    {src: "cHighQuarter.ogg", id: "note18Quarter"},  {src: "cHighEighth.ogg", id: "note18Eighth"},    {src: "cHighSixt.ogg", id: "note18Sixt"},
-        {src: "dHighWhole.ogg", id: "note19Whole"},  {src: "dHighHalf.ogg", id: "note19Half"},    {src: "dHighQuarter.ogg", id: "note19Quarter"},  {src: "dHighEighth.ogg", id: "note19Eighth"},    {src: "dHighSixt.ogg", id: "note19Sixt"}
+    {src: "gLowWhole.ogg", id: "note1Whole"},    {src: "gLowHalf.ogg", id: "note1Half"},      {src: "gLowQuarter.ogg", id: "note1Quarter"},    {src: "gLowEighth.ogg", id: "note1Eighth"},      {src: "gLowSixt.ogg", id: "note1Sixt"},
+    {src: "aLowWhole.ogg", id: "note2Whole"},    {src: "aLowHalf.ogg", id: "note2Half"},      {src: "aLowQuarter.ogg", id: "note2Quarter"},    {src: "aLowEighth.ogg", id: "note2Eighth"},      {src: "aLowSixt.ogg", id: "note2Sixt"},
+    {src: "bLowWhole.ogg", id: "note3Whole"},    {src: "bLowHalf.ogg", id: "note3Half"},      {src: "bLowQuarter.ogg", id: "note3Quarter"},    {src: "bLowEighth.ogg", id: "note3Eighth"},      {src: "bLowSixt.ogg", id: "note3Sixt"},
+    {src: "cLowWhole.ogg", id: "note4Whole"},    {src: "cLowHalf.ogg", id: "note4Half"},      {src: "cLowQuarter.ogg", id: "note4Quarter"},    {src: "cLowEighth.ogg", id: "note4Eighth"},      {src: "cLowSixt.ogg", id: "note4Sixt"},
+    {src: "dLowWhole.ogg", id: "note5Whole"},    {src: "dLowHalf.ogg", id: "note5Half"},      {src: "dLowQuarter.ogg", id: "note5Quarter"},    {src: "dLowEighth.ogg", id: "note5Eighth"},      {src: "dLowSixt.ogg", id: "note5Sixt"},
+    {src: "eLowWhole.ogg", id: "note6Whole"},    {src: "eLowHalf.ogg", id: "note6Half"},      {src: "eLowQuarter.ogg", id: "note6Quarter"},    {src: "eLowEighth.ogg", id: "note6Eighth"},      {src: "eLowSixt.ogg", id: "note6Sixt"},
+    {src: "fLowWhole.ogg", id: "note7Whole"},    {src: "fLowHalf.ogg", id: "note7Half"},      {src: "fLowQuarter.ogg", id: "note7Quarter"},    {src: "fLowEighth.ogg", id: "note7Eighth"},      {src: "fLowSixt.ogg", id: "note7Sixt"},
+    
+    {src: "gMidWhole.ogg", id: "note8Whole"},    {src: "gMidHalf.ogg", id: "note8Half"},      {src: "gMidQuarter.ogg", id: "note8Quarter"},    {src: "gMidEighth.ogg", id: "note8Eighth"},      {src: "gMidSixt.ogg", id: "note8Sixt"},
+    {src: "aMidWhole.ogg", id: "note9Whole"},    {src: "aMidHalf.ogg", id: "note9Half"},      {src: "aMidQuarter.ogg", id: "note9Quarter"},    {src: "aMidEighth.ogg", id: "note9Eighth"},      {src: "aMidSixt.ogg", id: "note9Sixt"},
+    {src: "bMidWhole.ogg", id: "note10Whole"},   {src: "bMidHalf.ogg", id: "note10Half"},     {src: "bMidQuarter.ogg", id: "note10Quarter"},   {src: "bMidEighth.ogg", id: "note10Eighth"},     {src: "bMidSixt.ogg", id: "note10Sixt"},
+    {src: "cMidWhole.ogg", id: "note11Whole"},   {src: "cMidHalf.ogg", id: "note11Half"},     {src: "cMidQuarter.ogg", id: "note11Quarter"},   {src: "cMidEighth.ogg", id: "note11Eighth"},     {src: "cMidSixt.ogg", id: "note11Sixt"},
+    {src: "dMidWhole.ogg", id: "note12Whole"},   {src: "dMidHalf.ogg", id: "note12Half"},     {src: "dMidQuarter.ogg", id: "note12Quarter"},   {src: "dMidEighth.ogg", id: "note12Eighth"},     {src: "dMidSixt.ogg", id: "note12Sixt"},
+    {src: "eMidWhole.ogg", id: "note13Whole"},   {src: "eMidHalf.ogg", id: "note13Half"},     {src: "eMidQuarter.ogg", id: "note13Quarter"},   {src: "eMidEighth.ogg", id: "note13Eighth"},     {src: "eMidSixt.ogg", id: "note13Sixt"},
+    {src: "fMidWhole.ogg", id: "note14Whole"},   {src: "fMidHalf.ogg", id: "note14Half"},     {src: "fMidQuarter.ogg", id: "note14Quarter"},   {src: "fMidEighth.ogg", id: "note14Eighth"},     {src: "fMidSixt.ogg", id: "note14Sixt"},
+    
+    {src: "gHighWhole.ogg", id: "note15Whole"},  {src: "gHighHalf.ogg", id: "note15Half"},    {src: "gHighQuarter.ogg", id: "note15Quarter"},  {src: "gHighEighth.ogg", id: "note15Eighth"},    {src: "gHighSixt.ogg", id: "note15Sixt"},
+    {src: "aHighWhole.ogg", id: "note16Whole"},  {src: "aHighHalf.ogg", id: "note16Half"},    {src: "aHighQuarter.ogg", id: "note16Quarter"},  {src: "aHighEighth.ogg", id: "note16Eighth"},    {src: "aHighSixt.ogg", id: "note16Sixt"},
+    {src: "bHighWhole.ogg", id: "note17Whole"},  {src: "bHighHalf.ogg", id: "note17Half"},    {src: "bHighQuarter.ogg", id: "note17Quarter"},  {src: "bHighEighth.ogg", id: "note17Eighth"},    {src: "bHighSixt.ogg", id: "note17Sixt"},
+    {src: "cHighWhole.ogg", id: "note18Whole"},  {src: "cHighHalf.ogg", id: "note18Half"},    {src: "cHighQuarter.ogg", id: "note18Quarter"},  {src: "cHighEighth.ogg", id: "note18Eighth"},    {src: "cHighSixt.ogg", id: "note18Sixt"},
+    {src: "dHighWhole.ogg", id: "note19Whole"},  {src: "dHighHalf.ogg", id: "note19Half"},    {src: "dHighQuarter.ogg", id: "note19Quarter"},  {src: "dHighEighth.ogg", id: "note19Eighth"},    {src: "dHighSixt.ogg", id: "note19Sixt"}
 ];
 
 var queue;
@@ -155,8 +153,6 @@ function loadComplete(evt) {
     addBtn = new createjs.Bitmap(queue.getResult("addBtn"));
     playBtn = new createjs.Bitmap(queue.getResult("playBtn"));
     undoBtn = new createjs.Bitmap(queue.getResult("undoBtn"));
-    saveBtn = new createjs.Bitmap(queue.getResult("saveBtn"));
-    loadBtn = new createjs.Bitmap(queue.getResult("loadBtn"));
 
     showNote1 = new createjs.Bitmap(queue.getResult("showNote1"));
     showNote2 = new createjs.Bitmap(queue.getResult("showNote2"));
@@ -264,7 +260,12 @@ function drawTools() {
         switchNote();
     });
 
-    downBtn.x = 30;
+    var keyLabel = new createjs.Text("(You can use the up/down arrow keys)", "16px Arial", "#FFF");
+    keyLabel.x = 15;
+    keyLabel.y = 580;
+    stage.addChild(keyLabel);
+
+    downBtn.x = 60;
     downBtn.y = 530;
     stage.addChild(downBtn);
     downBtn.on("click", function(evt) {
@@ -275,7 +276,7 @@ function drawTools() {
         checkCurrentNote();
     });
 
-    upBtn.x = 170;
+    upBtn.x = 160;
     upBtn.y = 530;
     stage.addChild(upBtn);
     upBtn.on("click", function(evt) {
@@ -286,11 +287,11 @@ function drawTools() {
         checkCurrentNote();
     });
 
-    previewBtn.x = 50;
+    previewBtn.x = 70;
     previewBtn.y = 810;
     stage.addChild(previewBtn);
 
-    undoBtn.x = 0;
+    undoBtn.x = 20;
     undoBtn.y = 870;
     stage.addChild(undoBtn);
     undoBtn.on("click", function(evt) {
@@ -298,7 +299,7 @@ function drawTools() {
         checkNoteCount();
     });
 
-    addBtn.x = 100;
+    addBtn.x = 110;
     addBtn.y = 870;
     stage.addChild(addBtn);
     addBtn.on("click", function(evt) {
@@ -320,50 +321,27 @@ function drawTools() {
         });
     });
 
-    saveBtn.x = 100;
-    saveBtn.y = 400;
-    stage.addChild(saveBtn);
+    checkCurrentNote();
+}
 
+function saveFile() {
     var nArray = [];
-
-    saveBtn.on("click", function(evt) {
-        noteArray.forEach(function(n){
+    noteArray.forEach(function(n){
             var obj = {
                 noteType: n.noteType,
                 noteValue: n.noteValue,
                 lineNum: n.lineNum,
                 x: n.x,
-                y: n.y
+                y: n.y,
+                noteSound: n.noteSound 
             };
             nArray.push(obj);
         });
 
         var textToWrite = JSON.stringify(nArray);
         
-        // loading logic
-            // var blah = JSON.parse(textFromFileLoaded);
-            // console.log("printing loaded file");
-            // console.log(blah[0].type);
-            // blah.forEach(function(n){
-            //     var newNote = note.clone();
-            //     newNote.gotoAndPlay(n.noteType);
-            //     newNote.noteValue = n.noteValue;
-            //     newNote.noteType = n.noteType;
-            //     newNote.lineNum = n.lineNum;
-            //     newNote.regX = 17;
-            //     newNote.regY = 70;
-            //     newNote.x = n.x;
-            //     newNote.y = n.y + 500;
-            //     newNote.sound = "note" + newNote.lineNum + selectedNote;
-            //     newNote.on("click", function(evt) {
-            //         createjs.Sound.play(newNote.sound);
-            //     });
-            //     stage.addChild(newNote);
-            // });
-
         // rest of saving logic
             var textFileAsBlob = new Blob([textToWrite], {type:'application/json'});
-            console.log("blob: " + textFileAsBlob);
             var fileNameToSaveAs = "songNameHere.json";
             var downloadLink = document.createElement("a");
             downloadLink.download = fileNameToSaveAs;
@@ -384,50 +362,49 @@ function drawTools() {
                 document.body.appendChild(downloadLink);
             }
             downloadLink.click();
-    });
-
-    loadBtn.x = 100;
-    loadBtn.y = 460;
-    stage.addChild(loadBtn);
-    loadBtn.on("click", function(evt) {
-        var fileToLoad = document.getElementById("fileToLoad").value;
-        var fileParts = fileToLoad.split('\\');
-        var fileName = fileParts[fileParts.length -1];
-
-        var fileReader = new FileReader();
-        var textFromFileLoaded = null;
-            console.log("bookmark: before function");
-        fileReader.onload = function(fileLoadedEvent) 
-        {
-            console.log("bookmark: entered function");
-            textFromFileLoaded = fileLoadedEvent.target.result;
-            console.log("bookmark: " + textFromFileLoaded);
-            document.getElementById("inputTextToSave").value = textFromFileLoaded;
-        };
-            
-        var jsonData = JSON.parse(textFromFileLoaded);
-        console.log("printing loaded file");
-        console.log(jsonData);
-        jsonData.forEach(function(n){
-            var newNote = note.clone();
-            newNote.gotoAndPlay(n.noteType);
-            newNote.noteValue = n.noteValue;
-            newNote.noteType = n.noteType;
-            newNote.lineNum = n.lineNum;
-            newNote.regX = 17;
-            newNote.regY = 70;
-            newNote.x = n.x;
-            newNote.y = n.y + 500;
-            newNote.sound = "note" + newNote.lineNum + selectedNote;
-            newNote.on("click", function(evt) {
-                createjs.Sound.play(newNote.sound);
-            });
-            stage.addChild(newNote);
-        });
-    });
-
-    checkCurrentNote();
 }
+
+document.getElementById('files').addEventListener('change', loadFile, false);
+
+function loadFile(evt) {
+    var songFile = evt.target.files[0];
+    if(songFile) {
+        var reader = new FileReader();
+        reader.onload = function(e) {   
+            var contents = e.target.result;
+            var jsonData = JSON.parse(contents);
+
+            if(jsonData !== null) {
+                while(noteArray.length > 0) {
+                    stage.removeChild(noteArray.pop());
+                }
+                jsonData.forEach(function(jsonNote){
+                    var newNote = note.clone();
+                    newNote.gotoAndStop(jsonNote.noteType);
+                    newNote.noteValue = jsonNote.noteValue;
+                    newNote.noteType = jsonNote.noteType;
+                    newNote.lineNum = jsonNote.lineNum;
+                    newNote.noteSound = jsonNote.noteSound;
+                    newNote.regX = 17;
+                    newNote.regY = 70;
+                    newNote.x = jsonNote.x;
+                    newNote.y = jsonNote.y;
+                    newNote.on("click", function(evt) {
+                        createjs.Sound.play(jsonNote.noteSound);
+                    });
+                    noteArray.push(newNote);
+                    stage.addChild(newNote);
+                });
+            } else {
+                console.log("File data was null");
+            }
+        }
+        reader.readAsText(songFile);
+    } else {
+        console.log("Failed to load file.");
+    }
+}
+
 
 function destroyClickedElement(event) {
     document.body.removeChild(event.target);
@@ -751,7 +728,7 @@ function checkNoteCount() {
     noteArray.forEach(function(item){
         sum += item.noteValue;
     });
-    console.log("sum: " + sum);
+    // console.log("sum: " + sum);
 }
 
 function checkArrayLength() {
@@ -769,13 +746,13 @@ function addNewNote() {
     newNote.lineNum = currentNote;
     newNote.regX = 17;
     newNote.regY = 70;
-    newNote.sound = "note" + newNote.lineNum + selectedNote;
+    newNote.noteSound = "note" + newNote.lineNum + selectedNote;
     // console.log("note value: " + newNote.noteValue);
 
     console.log("array length: " + noteArray.length);
 
     newNote.on("click", function(evt) {
-        createjs.Sound.play(newNote.sound);
+        createjs.Sound.play(newNote.noteSound);
     });
 
     switch (currentNote) {

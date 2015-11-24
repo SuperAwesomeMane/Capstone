@@ -26,6 +26,7 @@ module.exports = function() {
                     user.email = profile.emails[0].value;
                     user.image = profile.photos[0].value;
                     user.username = profile.name.givenName + ' ' + profile.name.familyName;
+                    user.lessonsCompleted = 0;
 
                     user.facebook = {};
                     user.facebook.id = profile.id;
