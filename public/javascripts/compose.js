@@ -1,52 +1,49 @@
-// Variable Setup
-    var stage, gameTimer;
-    var FPS = 30, frameCount = 0;
-    var CANVAS_WIDTH = window.innerWidth;
-    var CANVAS_HEIGHT = window.innerHeight - 50;
+var stage, gameTimer = 0;
+var FPS = 30, frameCount = 0;
+var CANVAS_WIDTH = window.innerWidth;
+var CANVAS_HEIGHT = window.innerHeight - 50;
 
-    var canvas, canvasElement;
+var canvas, canvasElement;
 
-    var staff;
-    var wholeBtnSelect, wholeBtnSelected;
-    var halfBtnSelect, halfBtnSelected;
-    var quarterBtnSelect, quarterBtnSelected;
-    var eighthBtnSelect, eighthBtnSelected;
-    var sixteenthBtnSelect, sixteenthBtnSelected;
+var staff;
+var wholeBtnSelect, wholeBtnSelected;
+var halfBtnSelect, halfBtnSelected;
+var quarterBtnSelect, quarterBtnSelected;
+var eighthBtnSelect, eighthBtnSelected;
+var sixteenthBtnSelect, sixteenthBtnSelected;
 
-    var showNote1,showNote2,showNote3,showNote4,showNote5,showNote6,showNote7,showNote8,
-    showNote9,showNote10,showNote11,showNote12,showNote13,showNote14,showNote15,
-    showNote16,showNote17,showNote18,showNote19;
+var showNote1,showNote2,showNote3,showNote4,showNote5,showNote6,showNote7,showNote8,
+showNote9,showNote10,showNote11,showNote12,showNote13,showNote14,showNote15,
+showNote16,showNote17,showNote18,showNote19;
 
-    var downBtn, upBtn, previewBtn, addBtn, playBtn, undoBtn;
-    var staffY = 0;
-    var KEYCODE_UP = 38;
-    var KEYCODE_DOWN = 40;
-    var isPlaying = false;
-    var noteCounter = 0;
+var downBtn, upBtn, previewBtn, addBtn, playBtn, undoBtn;
+var staffY = 0;
+var KEYCODE_UP = 38;
+var KEYCODE_DOWN = 40;
 
-    var line1 = 290;
-    var line2 = 280;
-    var line3 = 265;
-    var line4 = 255;
-    var line5 = 245;
-    var line6 = 235;
-    var line7 = 220;
-    var line8 = 205;
-    var line9 = 190;
-    var line10 = 175;
-    var line11 = 160;
-    var line12 = 145;
-    var line13 = 130;
-    var line14 = 115;
-    var line15 = 105;
-    var line16 = 95;
-    var line17 = 85;
-    var line18= 75;
-    var line19 = 65;
-    var firstX = 550;
+var line1 = 290;
+var line2 = 280;
+var line3 = 265;
+var line4 = 255;
+var line5 = 245;
+var line6 = 235;
+var line7 = 220;
+var line8 = 205;
+var line9 = 190;
+var line10 = 175;
+var line11 = 160;
+var line12 = 145;
+var line13 = 130;
+var line14 = 115;
+var line15 = 105;
+var line16 = 95;
+var line17 = 85;
+var line18= 75;
+var line19 = 65;
+var firstX = 550;
 
-    var currentNote = 1;
-    var noteArray = [];
+var currentNote = 1;
+var noteArray = [];
 
 manifest = [
     // SPRITES
@@ -211,8 +208,6 @@ function setupCanvas() {
     loadFiles();
 }
 
-var selectedNote = 'Whole';
-
 function drawTools() {
     console.log("entered drawTools function");
     staff.x = 350;
@@ -225,42 +220,22 @@ function drawTools() {
     wholeBtnSelected.x = 15;
     wholeBtnSelected.y = 50;
     stage.addChild(wholeBtnSelected);
-    wholeBtnSelect.on("click", function(evt) {
-        selectedNote = 'Whole';
-        switchNote();
-    });
 
     halfBtnSelect.x = 70;
     halfBtnSelect.y = 50;
     stage.addChild(halfBtnSelect);
-    halfBtnSelect.on("click", function(evt){
-        selectedNote = 'Half';
-        switchNote();
-    });
 
     quarterBtnSelect.x = 125;
     quarterBtnSelect.y = 50;
     stage.addChild(quarterBtnSelect);
-    quarterBtnSelect.on("click", function(evt) {
-        selectedNote = 'Quarter';
-        switchNote();
-    });
 
     eighthBtnSelect.x = 180;
     eighthBtnSelect.y = 50;
     stage.addChild(eighthBtnSelect);
-    eighthBtnSelect.on("click", function(evt) {
-        selectedNote = 'Eighth';
-        switchNote();
-    });
 
     sixteenthBtnSelect.x = 235;
     sixteenthBtnSelect.y = 50;
     stage.addChild(sixteenthBtnSelect);
-    sixteenthBtnSelect.on("click", function(evt) {
-        selectedNote = 'Sixt';
-        switchNote();
-    });
 
     var keyLabel = new createjs.Text("(You can use the up/down arrow keys)", "16px Arial", "#FFF");
     keyLabel.x = 15;
@@ -270,24 +245,10 @@ function drawTools() {
     downBtn.x = 60;
     downBtn.y = 530;
     stage.addChild(downBtn);
-    downBtn.on("click", function(evt) {
-        currentNote -= 1;
-        if(currentNote < 1) {
-            currentNote += 1;
-        }
-        checkCurrentNote();
-    });
 
     upBtn.x = 160;
     upBtn.y = 530;
     stage.addChild(upBtn);
-    upBtn.on("click", function(evt) {
-        currentNote += 1;
-        if(currentNote > 19) {
-            currentNote -= 1;
-        }
-        checkCurrentNote();
-    });
 
     previewBtn.x = 70;
     previewBtn.y = 810;
@@ -296,29 +257,80 @@ function drawTools() {
     undoBtn.x = 20;
     undoBtn.y = 870;
     stage.addChild(undoBtn);
-    undoBtn.on("click", function(evt) {
-        stage.removeChild(noteArray.pop());
-        checkNoteCount();
-    });
 
     addBtn.x = 110;
     addBtn.y = 870;
     stage.addChild(addBtn);
-    addBtn.on("click", function(evt) {
-        addNewNote();
-    });
 
     playBtn.x = 200;
     playBtn.y = 870;
     stage.addChild(playBtn);
 
-    playBtn.on("click", function(evt) {
-        isPlaying = true;
-    });
-
+    createButtonListeners();
     checkCurrentNote();
 }
 
+var selectedNote = 'Whole';
+var isPlaying = false;
+var noteCounter;
+
+function createButtonListeners() {
+    wholeBtnSelect.on("click", function(evt) {
+        selectedNote = 'Whole';
+        switchNote();
+    });
+
+    halfBtnSelect.on("click", function(evt){
+        selectedNote = 'Half';
+        switchNote();
+    });
+
+    quarterBtnSelect.on("click", function(evt) {
+        selectedNote = 'Quarter';
+        switchNote();
+    });
+
+    eighthBtnSelect.on("click", function(evt) {
+        selectedNote = 'Eighth';
+        switchNote();
+    });
+
+    sixteenthBtnSelect.on("click", function(evt) {
+        selectedNote = 'Sixt';
+        switchNote();
+    });
+
+    downBtn.on("click", function(evt) {
+        currentNote -= 1;
+        if(currentNote < 1) {
+            currentNote += 1;
+        }
+        checkCurrentNote();
+    });
+
+    upBtn.on("click", function(evt) {
+        currentNote += 1;
+        if(currentNote > 19) {
+            currentNote -= 1;
+        }
+        checkCurrentNote();
+    });
+    
+    undoBtn.on("click", function(evt) {
+        stage.removeChild(noteArray.pop());
+        checkNoteCount();
+    });
+    
+    addBtn.on("click", function(evt) {
+        addNewNote();
+    });
+    
+    playBtn.on("click", function(evt) {
+        isPlaying = true;
+        noteCounter = 0;
+        gameTimer = 0;
+    });
+}
 function saveFile() {
     var nArray = [];
     noteArray.forEach(function(n){
@@ -400,9 +412,8 @@ function loadFile(evt) {
     }
 }
 
-
-function destroyClickedElement(event) {
-    document.body.removeChild(event.target);
+function destroyClickedElement(event){
+    document.body.removeChild(event.target);
 }
 
 function switchNote() {
@@ -1023,35 +1034,48 @@ function keyPressed(event) {
         }
     }
 
-function resetGameTimer() {
-    gameTimer = 0;
-}
+// function resetGameTimer() {
+//     gameTimer = 0;
+// }
 
+var noteInArray;
 
 function runGameTimer() {
-    frameCount += 1;
-    if(frameCount%(FPS/10) === 0) {
-        gameTimer = frameCount/(FPS);
-    }
-
-    var currentNote = noteArray[noteCounter];
-    if(isPlaying === true) {
-        resetGameTimer();
-        if(gameTimer < .1) {
-            createjs.Sound.play(currentNote.noteSound);
-            console.log(gameTimer);
-        }
-        else if(gameTimer < currentNote.noteValue) {
-            noteCounter++;
-            if(noteCounter > noteArray.length) {
-                isPlaying = false;
-            }
-        }
-    }
 }
 
 function loop() {
-    runGameTimer();
+    // runGameTimer();
+    if(isPlaying) {
+        
+        frameCount += 1;
+        if(frameCount%(FPS/10) === 0) {
+            gameTimer = frameCount/(FPS);
+        }
+
+        noteInArray = noteArray[noteCounter];
+        if(noteInArray) {
+            // console.log("Time: " + gameTimer);
+            // console.log("Count: " + noteCounter);
+
+            if(gameTimer === 0) {
+                createjs.Sound.play(noteInArray.noteSound);
+                // console.log("note " + noteCounter + " played");
+            }
+            else if(noteCounter <= noteArray.length) {
+                if(gameTimer >= noteInArray.noteValue /2) {
+                    noteCounter += 1;
+                    // console.log("Counter up: " + noteCounter);
+                    gameTimer = 0;
+                    frameCount = 0;
+                }
+            } else {
+                isPlaying = false;
+            }
+        } else {
+            console.log("End of note sequence");
+            isPlaying = false;
+        }
+    }
     stage.update();
 }
 
@@ -1061,6 +1085,6 @@ function main() {
     this.document.onkeydown = keyPressed;
 }
 
-resetGameTimer();
+// resetGameTimer();
 createjs.Ticker.addEventListener("tick", loop);
 createjs.Ticker.setFPS(FPS);
