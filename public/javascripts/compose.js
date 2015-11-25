@@ -18,8 +18,12 @@ showNote16,showNote17,showNote18,showNote19;
 
 var downBtn, upBtn, previewBtn, addBtn, playBtn, undoBtn;
 var staffY = 0;
+
 var KEYCODE_UP = 38;
 var KEYCODE_DOWN = 40;
+var KEYCODE_ENTER = 13;
+var KEYCODE_SPACE = 32;
+var KEYCODE_ESCAPE = 27;
 
 var line1 = 290;
 var line2 = 280;
@@ -242,13 +246,13 @@ function drawTools() {
     keyLabel.y = 580;
     stage.addChild(keyLabel);
 
-    downBtn.x = 60;
-    downBtn.y = 530;
-    stage.addChild(downBtn);
-
-    upBtn.x = 160;
+    upBtn.x = 60;
     upBtn.y = 530;
     stage.addChild(upBtn);
+
+    downBtn.x = 160;
+    downBtn.y = 530;
+    stage.addChild(downBtn);
 
     previewBtn.x = 70;
     previewBtn.y = 810;
@@ -734,7 +738,6 @@ function checkNoteCount() {
     noteArray.forEach(function(item){
         sum += item.noteValue;
     });
-    // console.log("sum: " + sum);
 }
 
 function checkArrayLength() {
@@ -753,10 +756,6 @@ function addNewNote() {
     newNote.regX = 17;
     newNote.regY = 70;
     newNote.noteSound = "note" + newNote.lineNum + selectedNote;
-    // console.log("note value: " + newNote.noteValue);
-
-    console.log("array length: " + noteArray.length);
-
     newNote.on("click", function(evt) {
         createjs.Sound.play(newNote.noteSound);
     });
@@ -1016,27 +1015,35 @@ function addNewNote() {
 }
 
 function keyPressed(event) {
-        switch(event.keyCode) {
-            case KEYCODE_UP: 
-                currentNote += 1;
-                if(currentNote > 19) {
-                    currentNote -= 1;
-                }
-                checkCurrentNote();
-                break;
-            case KEYCODE_DOWN: 
-                currentNote -= 1;
-                if(currentNote < 1) {
-                    currentNote += 1;
-                }
-                checkCurrentNote();
-                break;
+    switch(event.keyCode) {
+        case KEYCODE_UP: 
+        currentNote += 1;
+        if(currentNote > 19) {
+            currentNote -= 1;
         }
+        checkCurrentNote();
+        break;
+        case KEYCODE_DOWN: 
+        currentNote -= 1;
+        if(currentNote < 1) {
+            currentNote += 1;
+        }
+        checkCurrentNote();
+        break;
+        case KEYCODE_ENTER:
+        addNewNote();
+        break;
+        case KEYCODE_SPACE:
+        isPlaying = true;
+        noteCounter = 0;
+        gameTimer = 0;
+        break;
+        case KEYCODE_ESCAPE:
+        stage.removeChild(noteArray.pop());
+        checkNoteCount();
+        break;
     }
-
-// function resetGameTimer() {
-//     gameTimer = 0;
-// }
+}
 
 var noteInArray;
 
@@ -1044,7 +1051,6 @@ function runGameTimer() {
 }
 
 function loop() {
-    // runGameTimer();
     if(isPlaying) {
         
         frameCount += 1;
@@ -1054,17 +1060,12 @@ function loop() {
 
         noteInArray = noteArray[noteCounter];
         if(noteInArray) {
-            // console.log("Time: " + gameTimer);
-            // console.log("Count: " + noteCounter);
-
             if(gameTimer === 0) {
                 createjs.Sound.play(noteInArray.noteSound);
-                // console.log("note " + noteCounter + " played");
             }
             else if(noteCounter <= noteArray.length) {
-                if(gameTimer >= noteInArray.noteValue /2) {
+                if(gameTimer >= noteInArray.noteValue / 2) {
                     noteCounter += 1;
-                    // console.log("Counter up: " + noteCounter);
                     gameTimer = 0;
                     frameCount = 0;
                 }
