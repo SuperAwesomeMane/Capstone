@@ -10,6 +10,8 @@
 		<nav class="authNav">
 			<ul class="social list-inline">
 				<% if(user != 'null') { %>
+					<li class="logout"><a href="/logout">Log Out</a></li>
+					<li>|</li>
 					<li class="username"><a href="/profile"><%=user.username%></a></li>
 					<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
 				<% } %>
@@ -33,7 +35,7 @@
 		</section>
 		<section class="homeFlex">
 			<section class="learnSection">
-				<h2>Start right now and learn how to read music on your own by taking our lessons.</h2>
+				<h2>Start right now and learn how to read music by taking some lessons.</h2>
 				<br>
 				<a href="/learn"><button class="learnBtn">Learn</button></a>
 			</section>

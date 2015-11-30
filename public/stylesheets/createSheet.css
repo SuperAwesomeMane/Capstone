@@ -6,6 +6,14 @@ body {
 	margin-top: 50px;
 }
 
+.loadIcon {
+	width: 150px;
+	height: 100px;
+	margin: 0 auto;
+	margin-top: 20%;
+	text-align: center;
+}
+
 .header {
 	position: absolute;
 	top: 0;
@@ -65,7 +73,10 @@ body {
 	float: right;
 	font-size: 1.4em;
 }
-.username {
+.username a, .logout a {
+	text-decoration: none;
+}
+.username a:hover, .logout a:hover {
 	text-decoration: underline;
 }
 .userPic {

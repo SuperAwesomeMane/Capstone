@@ -12,6 +12,8 @@
 	<header class="header">
 		<nav class="authNav">
 			<ul>
+				<li class="logout"><a href="/logout">Log Out</a></li>
+				<li>|</li>
 			    <li class="profileName"><%=user.username%></li>
 			    <li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
 			</ul>
@@ -21,7 +23,7 @@
 		<div class="pageTitle">
 			<h1>Profile</h1>
 		</div>
-		<nav class="mainNav">
+		<nav class="mainNav profileNav">
 			<ul>
 			    <li><a href="/">Home</a></li>
 			    <li><a href="/learn">Learn</a></li>
@@ -32,9 +34,11 @@
 		</section>
 		<section class="profileFlex">
 			<section class="profileSection">
-				<h1>Progress</h1>
 				<div class="progressDiv">
+					<h1>Lesson Progress</h1>
 					<p>Lessons Completed: <%=user.lessonsCompleted%></p>
+					<h1>Songs</h1>
+					<p>Songs Created: No Songs</p>
 				</div>
 			</section>
 		</section>

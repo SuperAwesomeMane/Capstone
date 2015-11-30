@@ -12,6 +12,8 @@
 	<header class="header">
 		<nav class="authNav">
 			<ul class="social list-inline">
+				<li class="username"><a href="/logout">Log Out</a></li>
+				<li>|</li>
 				<li class="username"><a href="/profile"><%=user.username%></a></li>
 				<% if(user.image == "images/default.png") { %>
 					<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
@@ -34,7 +36,7 @@
 		</nav>
 		<section class="lessonFlex">
 			<section class="lessonInfoSection">
-				<p class="lessonText">A <span>Scale</span> is a sequence of certain notes withn on octave. The first kind of scale we will go over is the <span>Major Scale</span>.</p><br>
+				<p class="lessonText">A <span>Scale</span> is a sequence of certain notes within an octave. The first kind of scale we will go over is the <span>Major Scale</span>.</p><br>
 				<p class="lessonText">Any major scale can be created by using a formula. The formula tells us when to make whole and half steps so that it creates a major scale.</p>
 				<img src="../images/lesson7/majorFormula.jpg" alt="major scale formula">
 				<p class="lessonText">W's represent whole steps, and h's respresent half steps. We'll build a C Major Scale as an example. The starting note is a C.</p>

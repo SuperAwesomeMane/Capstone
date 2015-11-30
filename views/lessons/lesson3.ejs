@@ -12,6 +12,8 @@
 	<header class="header">
 		<nav class="authNav">
 			<ul class="social list-inline">
+				<li class="username"><a href="/logout">Log Out</a></li>
+				<li>|</li>
 				<li class="username"><a href="/profile"><%=user.username%></a></li>
 				<% if(user.image == "images/default.png") { %>
 					<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>

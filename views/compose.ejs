@@ -9,6 +9,8 @@
 	<header class="header">
 		<nav class="authNav">
 			<ul class="social list-inline">
+				<li class="logout"><a href="/logout">Log Out</a></li>
+				<li style="color: white;">|</li>
 				<li class="username"><a href="/profile"><%=user.username%></a></li>
 		    	<% if(user.image == "images/default.png") { %>
 					<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
@@ -17,6 +19,10 @@
 				<% } %>
 			</ul>
 		</nav>
+		<div class="loadIcon">
+			<img id="loading" src="/createAssets/load.GIF">
+			<p id="loadingText">Loading Assets...</p>
+		</div>
 		<nav class="createNav">
 			<ul>
 				<li><a href="/">Home</a></li>
@@ -27,8 +33,9 @@
 			</ul>
 		</nav>
 	</header>
-	  <canvas id="canvas" class="canvas"></canvas>
-
+	<main>
+		<canvas id="canvas" class="canvas"></canvas>
+	</main>
 
 	  <script src="/javascripts/compose.js"></script>
 </body>

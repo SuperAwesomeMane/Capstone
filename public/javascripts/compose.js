@@ -16,7 +16,7 @@ var showNote1,showNote2,showNote3,showNote4,showNote5,showNote6,showNote7,showNo
 showNote9,showNote10,showNote11,showNote12,showNote13,showNote14,showNote15,
 showNote16,showNote17,showNote18,showNote19;
 
-var downBtn, upBtn, previewBtn, addBtn, playBtn, undoBtn;
+var downBtn, upBtn, previewBtn, addBtn, playBtn, undoBtn, stopBtn;
 var staffY = 0;
 
 var KEYCODE_UP = 38;
@@ -74,6 +74,7 @@ manifest = [
     {src: "addBtn.jpg", id: "addBtn"},
     {src: "playBtn.jpg", id: "playBtn"},
     {src: "undoBtn.jpg", id: "undoBtn"},
+    {src: "stopBtn.jpg", id: "stopBtn"},
 
     {src: "showNote1.png", id: "showNote1"},
     {src: "showNote2.png", id: "showNote2"},
@@ -156,6 +157,7 @@ function loadComplete(evt) {
     addBtn = new createjs.Bitmap(queue.getResult("addBtn"));
     playBtn = new createjs.Bitmap(queue.getResult("playBtn"));
     undoBtn = new createjs.Bitmap(queue.getResult("undoBtn"));
+    stopBtn = new createjs.Bitmap(queue.getResult("stopBtn"));
 
     showNote1 = new createjs.Bitmap(queue.getResult("showNote1"));
     showNote2 = new createjs.Bitmap(queue.getResult("showNote2"));
@@ -178,6 +180,8 @@ function loadComplete(evt) {
     showNote19 = new createjs.Bitmap(queue.getResult("showNote19"));
 
     console.log("Images Loaded.");
+    document.getElementById("loading").src="";
+    document.getElementById("loadingText").innerHTML="";
     drawTools();
 }
 
@@ -240,6 +244,10 @@ function drawTools() {
     sixteenthBtnSelect.x = 235;
     sixteenthBtnSelect.y = 50;
     stage.addChild(sixteenthBtnSelect);
+    var selectLabel = new createjs.Text("Click to select a certain note type.", "18px Arial", "#FFF");
+    selectLabel.x = 15;
+    selectLabel.y = 110;
+    stage.addChild(selectLabel);
 
     var keyLabel = new createjs.Text("(You can use the up/down arrow keys)", "16px Arial", "#FFF");
     keyLabel.x = 15;
@@ -269,6 +277,9 @@ function drawTools() {
     playBtn.x = 200;
     playBtn.y = 870;
     stage.addChild(playBtn);
+
+    stopBtn.x = 200;
+    stopBtn.y = 870;
 
     createButtonListeners();
     checkCurrentNote();
@@ -330,9 +341,19 @@ function createButtonListeners() {
     });
     
     playBtn.on("click", function(evt) {
-        isPlaying = true;
-        noteCounter = 0;
-        gameTimer = 0;
+        if(isPlaying) {
+            isPlaying = false;
+            noteCounter = noteArray.length + 1;
+            stage.removeChild(stopBtn);
+            stage.addChild(playBtn);
+        } else {
+            isPlaying = true;
+            stage.removeChild(playBtn);
+            stage.addChild(stopBtn);
+        }
+            noteCounter = 0;
+            gameTimer = 0;
+            frameCount = 0;
     });
 }
 function saveFile() {
@@ -359,14 +380,12 @@ function saveFile() {
             downloadLink.innerHTML = "Download File";
             if (window.webkitURL != null)
             {
-                // Chrome allows the link to be clicked
-                // without actually adding it to the DOM.
+                // for chrome
                 downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
             }
             else
             {
-                // Firefox requires the link to be added to the DOM
-                // before it can be clicked.
+                // for firefox
                 downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
                 downloadLink.onclick = destroyClickedElement;
                 downloadLink.style.display = "none";
@@ -400,6 +419,10 @@ function loadFile(evt) {
                     newNote.regY = 70;
                     newNote.x = jsonNote.x;
                     newNote.y = jsonNote.y;
+                    if(newNote.lineNum >= 10) {
+                        newNote.scaleY = -1;
+                        newNote.scaleX = -1;
+                    }
                     newNote.on("click", function(evt) {
                         createjs.Sound.play(jsonNote.noteSound);
                     });
@@ -507,7 +530,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -519,7 +542,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -531,7 +554,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -543,7 +566,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -555,7 +578,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -567,7 +590,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -579,7 +602,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -591,7 +614,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -603,7 +626,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -615,7 +638,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -627,7 +650,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -639,7 +662,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -651,7 +674,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -663,7 +686,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -675,7 +698,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -687,7 +710,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -699,7 +722,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -711,7 +734,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -723,7 +746,7 @@ function checkCurrentNote() {
             shownNote.y = 600;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
-                shownNote.sound = "note" + currentNote + selectedNote;
+                shownNote.sound = "note" + currentNote + "Quarter";
                 createjs.Sound.play(shownNote.sound);
             });
             stage.addChild(shownNote);
@@ -753,6 +776,16 @@ function addNewNote() {
     newNote.noteValue = getNoteValue();
     newNote.noteType = selectedNote;
     newNote.lineNum = currentNote;
+    if(noteArray.length === 0) {
+        newNote.x = firstX;
+    } else {
+        newNote.x = checkArrayLength();
+    }
+    newNote.y = checkNoteYCoordinate();
+    if(newNote.lineNum >= 10) {
+        newNote.scaleY = -1;
+        newNote.scaleX = -1;
+    }
     newNote.regX = 17;
     newNote.regY = 70;
     newNote.noteSound = "note" + newNote.lineNum + selectedNote;
@@ -760,258 +793,73 @@ function addNewNote() {
         createjs.Sound.play(newNote.noteSound);
     });
 
+    stage.addChild(newNote);
+    checkNoteCount();
+    noteArray.push(newNote);
+}
+
+function checkNoteYCoordinate() {
+    var newY;
     switch (currentNote) {
         case 1:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line1 + staffY;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line1 + staffY;
         break;
         case 2:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line2 + staffY;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line2 + staffY;
         break;
         case 3:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line3 + staffY;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line3 + staffY;
         break;
         case 4:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line4 + staffY;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line4 + staffY;
         break;
         case 5:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line5 + staffY;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line5 + staffY;
         break;
         case 6:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line6 + staffY;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line6 + staffY;
         break;
         case 7:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line7 + staffY;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line7 + staffY;
         break;
         case 8:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line8 + staffY;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line8 + staffY;
         break;
         case 9:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line9 + staffY;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line9 + staffY;
         break;
         case 10:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line10 + staffY;
-            newNote.scaleY = -1;
-            newNote.scaleX = -1;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line10 + staffY;
         break;
         case 11:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line11 + staffY;
-            newNote.scaleY = -1;
-            newNote.scaleX = -1;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line11 + staffY;
         break;
         case 12:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line12 + staffY;
-            newNote.scaleY = -1;
-            newNote.scaleX = -1;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line12 + staffY;
         break;
         case 13:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line13 + staffY;
-            newNote.scaleY = -1;
-            newNote.scaleX = -1;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line13 + staffY;
         break;
         case 14:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line14 + staffY;
-            newNote.scaleY = -1;
-            newNote.scaleX = -1;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line14 + staffY;
         break;
         case 15:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line15 + staffY;
-            newNote.scaleY = -1;
-            newNote.scaleX = -1;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line15 + staffY;
         break;
         case 16:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line16 + staffY;
-            newNote.scaleY = -1;
-            newNote.scaleX = -1;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line16 + staffY;
         break;
         case 17:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line17 + staffY;
-            newNote.scaleY = -1;
-            newNote.scaleX = -1;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line17 + staffY;
         break;
         case 18:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line18 + staffY;
-            newNote.scaleY = -1;
-            newNote.scaleX = -1;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line18 + staffY;
         break;
         case 19:
-            if(noteArray.length === 0) {
-                newNote.x = firstX;
-            } else {
-                newNote.x = checkArrayLength();
-            }
-            newNote.y = line19 + staffY;
-            newNote.scaleY = -1;
-            newNote.scaleX = -1;
-            stage.addChild(newNote);
-            checkNoteCount();
-            noteArray.push(newNote);
-
+            newY = line19 + staffY;
         break;
-
-        stage.addChild(shownNote);
     }
+    return newY;
 }
 
 function keyPressed(event) {
@@ -1034,9 +882,19 @@ function keyPressed(event) {
         addNewNote();
         break;
         case KEYCODE_SPACE:
-        isPlaying = true;
-        noteCounter = 0;
-        gameTimer = 0;
+        if(isPlaying) {
+            isPlaying = false;
+            noteCounter = noteArray.length + 1;
+            stage.removeChild(stopBtn);
+            stage.addChild(playBtn);
+        } else {
+            isPlaying = true;
+            noteCounter = 0;
+            gameTimer = 0;
+            frameCount = 0;
+            stage.removeChild(playBtn);
+            stage.addChild(stopBtn);
+        }
         break;
         case KEYCODE_ESCAPE:
         stage.removeChild(noteArray.pop());
@@ -1071,10 +929,14 @@ function loop() {
                 }
             } else {
                 isPlaying = false;
+                stage.removeChild(stopBtn);
+                stage.addChild(playBtn);
             }
         } else {
             console.log("End of note sequence");
             isPlaying = false;
+            stage.removeChild(stopBtn);
+            stage.addChild(playBtn);
         }
     }
     stage.update();

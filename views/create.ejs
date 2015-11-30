@@ -10,6 +10,8 @@
 		<nav class="authNav">
 			<ul class="social list-inline">
 				<% if(user != 'null') { %>
+					<li class="logout"><a href="/logout">Log Out</a></li>
+					<li>|</li>
 					<li class="username"><a href="/profile"><%=user.username%></a></li>
 			    	<li><img class="userPic" src="<%=user.image%>" alt="user image"></li>
 				<% } %>
@@ -27,12 +29,11 @@
 		</nav>
 	</header>
 	<main class="homeContent">
-		<div class="pageTitle">
-			<h1>Clef</h1>
-		</div>
+		<section class="homeLogo">
+			<a href="/"><img alt="Clef - Home" src="/images/logo.png"></a>
+		</section>
 		<nav class="mainNav">
 			<ul>
-			    <li><a href="/">Home</a></li>
 			    <li><a href="/learn">Learn</a></li>
 			    <li class="selected"><a href="/create">Create</a></li>
 			</ul>
@@ -40,8 +41,7 @@
 		<section class="createFlex">
 			<section class="createSections">
 				<h2>Feel like creating something original?
-					<br>Click on the button to discover what kind
-					<br>of music is hiding within your soul!
+					<br>Click on the button to find out.
 				</h2>
 				<img class="createThumb" src="images/createThumb.jpg" alt="preview of music creation page"><br>
 				<a href="/create/compose"><button class="createBtn">Create</button></a>

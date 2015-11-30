@@ -12,6 +12,8 @@
 	<header class="header">
 		<nav class="authNav">
 			<ul class="social list-inline">
+				<li class="username"><a href="/logout">Log Out</a></li>
+				<li>|</li>
 				<li class="username"><a href="/profile"><%=user.username%></a></li>
 				<% if(user.image == "images/default.png") { %>
 					<li><img class="userPic" src="../<%=user.image%>" alt="user image"></li>
@@ -46,7 +48,7 @@
 				<img src="../images/lesson5/34.jpg" alt="3/4 time signature">
 				<p class="lessonText">There are also more complicated time signature. Here's a time signature of 6/8.</p>
 				<img src="../images/lesson5/68.jpg" alt="6/8 time signature">
-				<p class="lessonText">As you can see, the same rules apply. The top number tells you there will be 6 notes in each measure, and the bottom number tells you that each note will be an eight note.</p><br>
+				<p class="lessonText">As you can see, the same rules apply. The top number tells you there will be 6 notes in each measure, and the bottom number tells you that each note will be an eighth note.</p><br>
 				<p class="lessonText">Another example would be a 3/2 time signature.</p>
 				<img src="../images/lesson5/32.jpg" alt="3/2 time signature">
 				<p class="lessonText">Each measure would contain 3 half notes.</p>

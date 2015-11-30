@@ -92,10 +92,6 @@ body {
 	float: right;
 	font-size: 1.4em;
 }
-.username {
-	text-decoration: underline;
-}
-
 .profileName {
 	text-decoration: none;
 }
@@ -105,7 +101,6 @@ body {
 	margin-top: -10px;
 	border: 1px solid white;
 }
-
 .mainNav a {
 	color: black;
 	border-bottom: 3px solid black;
@@ -116,9 +111,10 @@ body {
 	border-bottom: 3px solid white;
 }
 .mainNav {
-	width: 340px;
+	width: 225px;
 	height: 50px;
 	margin: 0 auto;
+	margin-bottom: -50px;
 }
 .mainNav ul {
 	margin: 0;
@@ -131,6 +127,36 @@ body {
 	margin: 0;
 	float: left;
 	font-size: 2em;
+}
+.formNav {
+	width: 350px;
+	height: 50px;
+	margin: 0 auto;
+	margin-bottom: -50px;
+}
+.formNav a {
+	color: black;
+	border-bottom: 3px solid black;
+}
+.formNav a:hover {
+	text-decoration: none;
+	color: white;
+	border-bottom: 3px solid white;
+}
+.formNav ul {
+	margin: 0;
+	padding: 0;
+}
+.formNav li {
+	list-style: none;
+	list-style-image: none;
+	padding: 10px;
+	margin: 0;
+	float: left;
+	font-size: 2em;
+}
+.profileNav {
+	width: 350px;
 }
 
 .selected {
@@ -160,13 +186,14 @@ body {
 	min-height: 80%;
 }
 .homeLogo {
-	width: 400px;
-	height: 200px;
+	width: 350px;
+	height: 160px;
 	margin: 0 auto;
+	margin-bottom: 10px;
 }
 .homeLogo img {
-	width: 400px;
-	height: 200px;
+	width: 330px;
+	height: 160px;
 }
 .homeFlex {
 	display: flex;
@@ -334,10 +361,9 @@ span {
 .profileSection {
 	background: rgba(185,231,255,.5);
 	min-width: 400px;
-	height: 450px;
+	height: auto;
 	margin: 0 auto;
 	margin: 20px;
-	padding: 20px;
 	text-align: center;
 	color: black;
 }
