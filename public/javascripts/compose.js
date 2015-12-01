@@ -127,13 +127,20 @@ var note;
 function loadComplete(evt) {
     var noteSheet = new createjs.SpriteSheet({
         images: [queue.getResult("spriteSheet")],
-        frames: [[0,0,60,80],[60,0,60,80],[120,0,60,80],[180,0,60,80],[240,0,60,80]],
+        frames: [[0,0,60,80],[60,0,60,80],[120,0,60,80],[180,0,60,80],[240,0,60,80],
+                [0,85,60,80],[60,85,60,80],[120,85,60,80],[180,85,60,80],[240,85,60,80]],
         animations: {
             Whole: [0,0, "Whole"],
             Half: [1,1, "Half"],
             Quarter: [2,2, "Quarter"],
             Eighth: [3,3, "Eighth"],
-            Sixt: [4,4, "Sixt"]
+            Sixt: [4,4, "Sixt"],
+
+            RedWhole: [5,5, "RedWhole"],
+            RedHalf: [6,6, "RedHalf"],
+            RedQuarter: [7,7, "RedQuarter"],
+            RedEighth: [8,8, "RedEighth"],
+            RedSixt: [9,9, "RedSixt"]
         }
     });
 
@@ -344,6 +351,9 @@ function createButtonListeners() {
         if(isPlaying) {
             isPlaying = false;
             noteCounter = noteArray.length + 1;
+            noteArray.forEach(function(note){
+                note.gotoAndPlay(note.noteType);
+            });
             stage.removeChild(stopBtn);
             stage.addChild(playBtn);
         } else {
@@ -416,7 +426,7 @@ function loadFile(evt) {
                     newNote.lineNum = jsonNote.lineNum;
                     newNote.noteSound = jsonNote.noteSound;
                     newNote.regX = 17;
-                    newNote.regY = 70;
+                    newNote.regY = 65;
                     newNote.x = jsonNote.x;
                     newNote.y = jsonNote.y;
                     if(newNote.lineNum >= 10) {
@@ -787,7 +797,7 @@ function addNewNote() {
         newNote.scaleX = -1;
     }
     newNote.regX = 17;
-    newNote.regY = 70;
+    newNote.regY = 65;
     newNote.noteSound = "note" + newNote.lineNum + selectedNote;
     newNote.on("click", function(evt) {
         createjs.Sound.play(newNote.noteSound);
@@ -885,6 +895,9 @@ function keyPressed(event) {
         if(isPlaying) {
             isPlaying = false;
             noteCounter = noteArray.length + 1;
+            noteArray.forEach(function(note){
+                note.gotoAndPlay(note.noteType);
+            });
             stage.removeChild(stopBtn);
             stage.addChild(playBtn);
         } else {
@@ -910,7 +923,6 @@ function runGameTimer() {
 
 function loop() {
     if(isPlaying) {
-        
         frameCount += 1;
         if(frameCount%(FPS/10) === 0) {
             gameTimer = frameCount/(FPS);
@@ -920,9 +932,11 @@ function loop() {
         if(noteInArray) {
             if(gameTimer === 0) {
                 createjs.Sound.play(noteInArray.noteSound);
+                noteInArray.gotoAndPlay("Red" + noteInArray.noteType);
             }
             else if(noteCounter <= noteArray.length) {
                 if(gameTimer >= noteInArray.noteValue / 2) {
+                    noteInArray.gotoAndPlay(noteInArray.noteType);
                     noteCounter += 1;
                     gameTimer = 0;
                     frameCount = 0;
