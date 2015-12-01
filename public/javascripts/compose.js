@@ -44,7 +44,7 @@ var line16 = 95;
 var line17 = 85;
 var line18= 75;
 var line19 = 65;
-var firstX = 550;
+var firstX = 650;
 
 var currentNote = 1;
 var noteArray = [];
@@ -225,7 +225,7 @@ function setupCanvas() {
 
 function drawTools() {
     console.log("entered drawTools function");
-    staff.x = 350;
+    staff.x = 450;
     staff.y = 100;
     stage.addChild(staff);
 
@@ -256,37 +256,60 @@ function drawTools() {
     selectLabel.y = 110;
     stage.addChild(selectLabel);
 
-    var keyLabel = new createjs.Text("(You can use the up/down arrow keys)", "16px Arial", "#FFF");
-    keyLabel.x = 15;
-    keyLabel.y = 580;
+    var keyLabel = new createjs.Text("Up/Down arrow keys to change the", "16px Arial", "#FFF");
+    keyLabel.x = 20;
+    keyLabel.y = 200;
     stage.addChild(keyLabel);
 
+    var keyLabel2 = new createjs.Text("location of the note on the staff", "16px Arial", "#FFF");
+    keyLabel2.x = 40;
+    keyLabel2.y = 220;
+    stage.addChild(keyLabel2);
+
     upBtn.x = 60;
-    upBtn.y = 530;
+    upBtn.y = 150;
     stage.addChild(upBtn);
 
     downBtn.x = 160;
-    downBtn.y = 530;
+    downBtn.y = 150;
     stage.addChild(downBtn);
 
-    previewBtn.x = 70;
-    previewBtn.y = 810;
+    var previewLabel = new createjs.Text("Click to preview pitch of note", "16px Arial", "#FFF");
+    previewLabel.x = 45;
+    previewLabel.y = 510;
+    stage.addChild(previewLabel);
+    previewBtn.x = 75;
+    previewBtn.y = 460;
     stage.addChild(previewBtn);
 
-    undoBtn.x = 20;
-    undoBtn.y = 870;
+    undoBtn.x = 65;
+    undoBtn.y = 550;
     stage.addChild(undoBtn);
 
-    addBtn.x = 110;
-    addBtn.y = 870;
+    addBtn.x = 155;
+    addBtn.y = 550;
     stage.addChild(addBtn);
 
-    playBtn.x = 200;
-    playBtn.y = 870;
+    playBtn.x = 110;
+    playBtn.y = 600;
     stage.addChild(playBtn);
 
-    stopBtn.x = 200;
-    stopBtn.y = 870;
+    stopBtn.x = 110;
+    stopBtn.y = 600;
+
+    var otherLabel = new createjs.Text("Press ENTER key to add note", "16px Arial", "#FFF");
+    otherLabel.x = 30;
+    otherLabel.y = 660;
+    var otherLabel2 = new createjs.Text("Press ESC key to undo last note ", "16px Arial", "#FFF");
+    otherLabel2.x = 30;
+    otherLabel2.y = 680;
+    var otherLabel3 = new createjs.Text("Press SPACE bar to play song", "16px Arial", "#FFF");
+    otherLabel3.x = 30;
+    otherLabel3.y = 700;
+
+    stage.addChild(otherLabel);
+    stage.addChild(otherLabel2);
+    stage.addChild(otherLabel3);
 
     createButtonListeners();
     checkCurrentNote();
@@ -537,7 +560,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote1;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -549,7 +572,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote2;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -561,7 +584,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote3;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -573,7 +596,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote4;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -585,7 +608,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote5;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -597,7 +620,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote6;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -609,7 +632,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote7;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -621,7 +644,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote8;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -633,7 +656,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote9;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -645,7 +668,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote10;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -657,7 +680,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote11;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -669,7 +692,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote12;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -681,7 +704,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote13;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -693,7 +716,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote14;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -705,7 +728,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote15;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -717,7 +740,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote16;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -729,7 +752,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote17;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -741,7 +764,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote18;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
@@ -753,7 +776,7 @@ function checkCurrentNote() {
             stage.removeChild(shownNote);
             shownNote = showNote19;
             shownNote.x = 50;
-            shownNote.y = 600;
+            shownNote.y = 250;
             shownNote.sound = "note" + currentNote + selectedNote;
             previewBtn.on("click", function(evt) {
                 shownNote.sound = "note" + currentNote + "Quarter";
