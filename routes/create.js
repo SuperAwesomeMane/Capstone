@@ -17,21 +17,26 @@ router.get('/', function(req, res) {
 
 router.get('/compose', function(req, res) {
     if (req.user) {
-        res.render('compose', {
-            user: req.user
+        var query = {username: req.user.username};
+        User.findOne(query, function(err, user) {
+            if (user) {
+                res.render('compose', {
+                    user: user,
+                });
+            } else {
+                return next(err);
+            }
         });
     } else {
         res.redirect("/login");
     }
 });
 
-router.post('/compose', function(req, res) {
+router.post('/compose', function(req, res, next) {
     var newSongName = req.body.saveSongName;
     var newSongNotes = JSON.parse(req.body.saveSongNotes);
 
     var query = {username: req.user.username};
-    var options = {new:true};
-
     User.findOne(query, function(err, user) {
         var newSongObj = {};
         newSongObj.songTitle = newSongName;
@@ -42,8 +47,6 @@ router.post('/compose', function(req, res) {
             if (err) {
                 console.error("error: " + err);
                 return next(err);
-            } else {
-                res.status(200).redirect("/create/compose");
             }
         });
     });

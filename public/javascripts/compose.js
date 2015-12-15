@@ -316,10 +316,14 @@ function drawTools() {
     var otherLabel3 = new createjs.Text("Press SPACE bar to play song", "16px Arial", "#FFF");
     otherLabel3.x = 30;
     otherLabel3.y = 700;
+    var songsLabel = new createjs.Text("Recent Songs", "20px Arial", "#FFF");
+    songsLabel.x = 80;
+    songsLabel.y = 740;
 
     stage.addChild(otherLabel);
     stage.addChild(otherLabel2);
     stage.addChild(otherLabel3);
+    stage.addChild(songsLabel);
 
     createButtonListeners();
     checkCurrentNote();

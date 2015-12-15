@@ -37,12 +37,15 @@
 				<div class="progressDiv">
 					<h2>Lesson Progress</h2>
 					<p>Lessons Completed: <%=user.lessonsCompleted%></p>
-					<h2>Songs</h2>
+					<h2>Recent Songs</h2>
 					<ul class="userSongs">
 						<% if(user.songs.length === 0) { %>
 							<li>No Songs</li>
 						<%} else { %>
-					    	<li><%=user.songs.length%></li>
+					    	<li>Number of songs: <%=user.songs.length%></li><br>
+							<% user.songs.forEach(function(song) { %>
+								<li><%=song.songTitle%></li>
+							<% }) %>
 					    <% } %>
 					</ul>
 				</div>

@@ -46,6 +46,15 @@
 		</nav>
 	</header>
 	<main>
+		<div class="songsArea">
+			<% if(user.songs.length === 0) { %>
+				<li>No Recent Songs</li>
+			<%} else { %>
+				<% user.songs.forEach(function(song) { %>
+					<li><a href="#"><%=song.songTitle%></a></li>
+				<% }) %>
+			<% } %>
+		</div>
 		<canvas id="canvas" class="canvas"></canvas>
 	</main>
 
