@@ -27,6 +27,7 @@ module.exports = function() {
                     user.image = profile.photos[0].value;
                     user.username = profile.name.givenName + ' ' + profile.name.familyName;
                     user.lessonsCompleted = 0;
+                    user.songs = [];
 
                     user.facebook = {};
                     user.facebook.id = profile.id;
@@ -35,6 +36,7 @@ module.exports = function() {
                     // console.log('USERNAME: ' + user.username);
 
                     user.save();
+
                     done(null, user);
                 }
             })

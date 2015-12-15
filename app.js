@@ -30,7 +30,7 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -43,6 +43,14 @@ app.use('/learn', learn);
 app.use('/create', create);
 app.use('/profile', profile);
 app.use('/auth', auth);
+
+dbRouter = require('./routes/userRoutes')(User);
+
+app.use('/api', dbRouter);
+
+app.get('/api', function(req, res) {
+  res.send('Welcome to API');
+})
 
 // Local User Authentication
 // =====================================================
@@ -73,10 +81,11 @@ app.post('/register', function(req, res) {
   newUser.password = req.body.password;
   newUser.email = req.body.email;
   newUser.lessonsCompleted = 0;
+  newUser.songs = [];
 
   newUser.save();
 
-  res.redirect("/profile");
+  res.redirect("/learn");
 });
 
 passport.use(new LocalStrategy(function(username, password, done) {

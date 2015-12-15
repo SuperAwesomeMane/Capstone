@@ -35,8 +35,16 @@
 		<section class="profileFlex">
 			<section class="profileSection">
 				<div class="progressDiv">
-					<h1>Lesson Progress</h1>
+					<h2>Lesson Progress</h2>
 					<p>Lessons Completed: <%=user.lessonsCompleted%></p>
+					<h2>Songs</h2>
+					<ul class="userSongs">
+						<% if(user.songs.length === 0) { %>
+							<li>No Songs</li>
+						<%} else { %>
+					    	<li><%=user.songs.length%></li>
+					    <% } %>
+					</ul>
 				</div>
 			</section>
 		</section>

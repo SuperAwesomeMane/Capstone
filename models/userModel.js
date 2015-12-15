@@ -22,7 +22,11 @@ var UserSchema = Schema({
 	},
 	google: {
 		type: Object
-	}
+	},
+	songs: [{
+		songTitle: String,
+		songNotes: []
+	}] 
 });
 
 module.exports = mongoose.model('User', UserSchema);

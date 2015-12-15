@@ -4,7 +4,7 @@ var router = express.Router();
 
 router.route('/google/callback')
     .get(passport.authenticate('google', {
-        successRedirect: '/profile/',
+        successRedirect: '/learn/',
         failure: '/error/'
     }));
 
@@ -17,7 +17,7 @@ router.route('/google')
 
 router.route('/facebook/callback')
     .get(passport.authenticate('facebook', {
-        successRedirect: '/profile/',
+        successRedirect: '/learn/',
         failureRedirect: '/error/'
     }));
 

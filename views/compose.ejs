@@ -7,6 +7,7 @@
 </head>
 <body onload="main();">
 	<header class="header">
+		<a id="deselect" href="#"></a>
 		<nav class="authNav">
 			<ul class="social list-inline">
 				<li class="logout"><a href="/logout">Log Out</a></li>
@@ -28,8 +29,19 @@
 				<li><a href="/">Home</a></li>
 				<li><a href="/learn">Learn</a></li>
 
-				<button onclick="saveFile();" class="fileSaver">Save Song</button>
-				<input type="file" id="files" name="files[]" class="fileLoader">
+				<li><form method="POST">
+					<input id="saveSongName" name="saveSongName" type="text" hidden='true'>
+					<input id="saveSongNotes" name="saveSongNotes" type="text" hidden='true'>
+					<input type="submit" onclick="saveFile();" value="Save Song" class="fileSaver">
+				</form></li>
+
+				<li><form>
+					<input id="loadSongName" type="text" hidden='true'>
+					<input id="loadSongNotes" type="text" hidden='true'>
+					<input onclick="loadFile()" type="submit" value="Load Song" class="fileLoader">
+				</form></li>
+				<!-- <input type="file" id="files" name="files[]" class="fileLoader"> -->
+				<li><input type"text" id="songTitle" placeholder="Enter song name"></li>
 			</ul>
 		</nav>
 	</header>

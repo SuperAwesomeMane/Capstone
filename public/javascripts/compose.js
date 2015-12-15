@@ -16,7 +16,7 @@ var showNote1,showNote2,showNote3,showNote4,showNote5,showNote6,showNote7,showNo
 showNote9,showNote10,showNote11,showNote12,showNote13,showNote14,showNote15,
 showNote16,showNote17,showNote18,showNote19;
 
-var downBtn, upBtn, previewBtn, addBtn, playBtn, undoBtn, stopBtn;
+var downBtn, upBtn, previewBtn, addBtn, playBtn, undoBtn, stopBtn, beat1Btn;
 var staffY = 0;
 
 var KEYCODE_UP = 38;
@@ -75,6 +75,7 @@ manifest = [
     {src: "playBtn.jpg", id: "playBtn"},
     {src: "undoBtn.jpg", id: "undoBtn"},
     {src: "stopBtn.jpg", id: "stopBtn"},
+    {src: "beat1.jpg", id: "beat1Btn"},
 
     {src: "showNote1.png", id: "showNote1"},
     {src: "showNote2.png", id: "showNote2"},
@@ -118,7 +119,8 @@ manifest = [
     {src: "aHighWhole.ogg", id: "note16Whole"},  {src: "aHighHalf.ogg", id: "note16Half"},    {src: "aHighQuarter.ogg", id: "note16Quarter"},  {src: "aHighEighth.ogg", id: "note16Eighth"},    {src: "aHighSixt.ogg", id: "note16Sixt"},
     {src: "bHighWhole.ogg", id: "note17Whole"},  {src: "bHighHalf.ogg", id: "note17Half"},    {src: "bHighQuarter.ogg", id: "note17Quarter"},  {src: "bHighEighth.ogg", id: "note17Eighth"},    {src: "bHighSixt.ogg", id: "note17Sixt"},
     {src: "cHighWhole.ogg", id: "note18Whole"},  {src: "cHighHalf.ogg", id: "note18Half"},    {src: "cHighQuarter.ogg", id: "note18Quarter"},  {src: "cHighEighth.ogg", id: "note18Eighth"},    {src: "cHighSixt.ogg", id: "note18Sixt"},
-    {src: "dHighWhole.ogg", id: "note19Whole"},  {src: "dHighHalf.ogg", id: "note19Half"},    {src: "dHighQuarter.ogg", id: "note19Quarter"},  {src: "dHighEighth.ogg", id: "note19Eighth"},    {src: "dHighSixt.ogg", id: "note19Sixt"}
+    {src: "dHighWhole.ogg", id: "note19Whole"},  {src: "dHighHalf.ogg", id: "note19Half"},    {src: "dHighQuarter.ogg", id: "note19Quarter"},  {src: "dHighEighth.ogg", id: "note19Eighth"},    {src: "dHighSixt.ogg", id: "note19Sixt"},
+    {src: "beat.ogg", id: "beat"}
 ];
 
 var queue;
@@ -165,6 +167,7 @@ function loadComplete(evt) {
     playBtn = new createjs.Bitmap(queue.getResult("playBtn"));
     undoBtn = new createjs.Bitmap(queue.getResult("undoBtn"));
     stopBtn = new createjs.Bitmap(queue.getResult("stopBtn"));
+    beat1Btn = new createjs.Bitmap(queue.getResult("beat1Btn"));
 
     showNote1 = new createjs.Bitmap(queue.getResult("showNote1"));
     showNote2 = new createjs.Bitmap(queue.getResult("showNote2"));
@@ -297,6 +300,13 @@ function drawTools() {
     stopBtn.x = 110;
     stopBtn.y = 600;
 
+    beat1Btn.x = 65;
+    beat1Btn.y = 750;
+    // stage.addChild(beat1Btn);
+    beat1Btn.on("click", function(evt) {
+        createjs.Sound.play("beat", {loop:-1});
+    })
+
     var otherLabel = new createjs.Text("Press ENTER key to add note", "16px Arial", "#FFF");
     otherLabel.x = 30;
     otherLabel.y = 660;
@@ -390,6 +400,8 @@ function createButtonListeners() {
     });
 }
 function saveFile() {
+    document.getElementById("deselect").focus();
+
     var nArray = [];
     noteArray.forEach(function(n){
             var obj = {
@@ -403,73 +415,109 @@ function saveFile() {
             nArray.push(obj);
         });
 
-        var textToWrite = JSON.stringify(nArray);
+    var songTitle = document.getElementById("songTitle").value;
+    if(songTitle == "") {
+        songTitle = 'Untitled';
+    }
+    var songNotes = JSON.stringify(nArray);
+
+    document.getElementById("saveSongName").value = songTitle;
+    document.getElementById("saveSongNotes").value = songNotes;
+
+    console.log("Song saved");
+    console.log(songTitle);
+    console.log(songNotes);
+
+    // save newSong object and to user's list of songs and save to database
+
+    // var nArray = [];
+    // noteArray.forEach(function(n){
+    //         var obj = {
+    //             noteType: n.noteType,
+    //             noteValue: n.noteValue,
+    //             lineNum: n.lineNum,
+    //             x: n.x,
+    //             y: n.y,
+    //             noteSound: n.noteSound 
+    //         };
+    //         nArray.push(obj);
+    //     });
+
+    //     var textToWrite = JSON.stringify(nArray);
         
-        // rest of saving logic
-            var textFileAsBlob = new Blob([textToWrite], {type:'application/json'});
-            var fileNameToSaveAs = "songNameHere.json";
-            var downloadLink = document.createElement("a");
-            downloadLink.download = fileNameToSaveAs;
-            downloadLink.innerHTML = "Download File";
-            if (window.webkitURL != null)
-            {
-                // for chrome
-                downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-            }
-            else
-            {
-                // for firefox
-                downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-                downloadLink.onclick = destroyClickedElement;
-                downloadLink.style.display = "none";
-                document.body.appendChild(downloadLink);
-            }
-            downloadLink.click();
+    //     // rest of saving logic
+    //         var textFileAsBlob = new Blob([textToWrite], {type:'application/json'});
+    //         var fileNameToSaveAs = "songNameHere.json";
+    //         var downloadLink = document.createElement("a");
+    //         downloadLink.download = fileNameToSaveAs;
+    //         downloadLink.innerHTML = "Download File";
+    //         if (window.webkitURL != null)
+    //         {
+    //             // for chrome
+    //             downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    //         }
+    //         else
+    //         {
+    //             // for firefox
+    //             downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+    //             downloadLink.onclick = destroyClickedElement;
+    //             downloadLink.style.display = "none";
+    //             document.body.appendChild(downloadLink);
+    //         }
+    //         downloadLink.click();
 }
 
-document.getElementById('files').addEventListener('change', loadFile, false);
+// document.getElementById('files').addEventListener('change', loadFile, false);
 
-function loadFile(evt) {
-    var songFile = evt.target.files[0];
-    if(songFile) {
-        var reader = new FileReader();
-        reader.onload = function(e) {   
-            var contents = e.target.result;
-            var jsonData = JSON.parse(contents);
+function loadFile() {
+    document.getElementById("deselect").focus();
+    console.log("Song loaded");
 
-            if(jsonData !== null) {
-                while(noteArray.length > 0) {
-                    stage.removeChild(noteArray.pop());
-                }
-                jsonData.forEach(function(jsonNote){
-                    var newNote = note.clone();
-                    newNote.gotoAndStop(jsonNote.noteType);
-                    newNote.noteValue = jsonNote.noteValue;
-                    newNote.noteType = jsonNote.noteType;
-                    newNote.lineNum = jsonNote.lineNum;
-                    newNote.noteSound = jsonNote.noteSound;
-                    newNote.regX = 17;
-                    newNote.regY = 65;
-                    newNote.x = jsonNote.x;
-                    newNote.y = jsonNote.y;
-                    if(newNote.lineNum >= 10) {
-                        newNote.scaleY = -1;
-                        newNote.scaleX = -1;
-                    }
-                    newNote.on("click", function(evt) {
-                        createjs.Sound.play(jsonNote.noteSound);
-                    });
-                    noteArray.push(newNote);
-                    stage.addChild(newNote);
-                });
-            } else {
-                console.log("File data was null");
-            }
-        }
-        reader.readAsText(songFile);
-    } else {
-        console.log("Failed to load file.");
-    }
+    // query database for song with name entered in textbox
+
+    // var songFile = evt.target.files[0];
+    // if(songFile) {
+    //     var reader = new FileReader();
+    //     reader.onload = function(e) {   
+    //         var contents = e.target.result;
+    //         var jsonData = JSON.parse(contents);
+
+    //         if(jsonData !== null) {
+    //             while(noteArray.length > 0) {
+    //                 stage.removeChild(noteArray.pop());
+    //             }
+    //             jsonData.forEach(function(jsonNote){
+    //                 var newNote = note.clone();
+    //                 newNote.gotoAndStop(jsonNote.noteType);
+    //                 newNote.noteValue = jsonNote.noteValue;
+    //                 newNote.noteType = jsonNote.noteType;
+    //                 newNote.lineNum = jsonNote.lineNum;
+    //                 newNote.noteSound = jsonNote.noteSound;
+    //                 newNote.regX = 17;
+    //                 newNote.regY = 65;
+    //                 newNote.x = jsonNote.x;
+    //                 newNote.y = jsonNote.y;
+    //                 if(newNote.lineNum >= 10) {
+    //                     newNote.scaleY = -1;
+    //                     newNote.scaleX = -1;
+    //                 }
+    //                 newNote.on("click", function(evt) {
+    //                     createjs.Sound.play(jsonNote.noteSound);
+    //                 });
+    //                 noteArray.push(newNote);
+    //                 stage.addChild(newNote);
+    //             });
+
+    //             // document.getElementById("loadingText").focus();
+
+    //         } else {
+    //             console.log("File data was null");
+    //         }
+    //     }
+    //     reader.readAsText(songFile);
+    // } else {
+    //     console.log("Failed to load file.");
+    // }
 }
 
 function destroyClickedElement(event){
