@@ -85,7 +85,7 @@ app.post('/register', function(req, res) {
 
   newUser.save();
 
-  res.redirect("/learn");
+  res.redirect("/login");
 });
 
 passport.use(new LocalStrategy(function(username, password, done) {

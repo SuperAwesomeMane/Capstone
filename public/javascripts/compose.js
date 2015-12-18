@@ -431,98 +431,110 @@ function saveFile() {
     console.log("Song saved");
     console.log(songTitle);
     console.log(songNotes);
-
-    // save newSong object and to user's list of songs and save to database
-
-    // var nArray = [];
-    // noteArray.forEach(function(n){
-    //         var obj = {
-    //             noteType: n.noteType,
-    //             noteValue: n.noteValue,
-    //             lineNum: n.lineNum,
-    //             x: n.x,
-    //             y: n.y,
-    //             noteSound: n.noteSound 
-    //         };
-    //         nArray.push(obj);
-    //     });
-
-    //     var textToWrite = JSON.stringify(nArray);
-        
-    //     // rest of saving logic
-    //         var textFileAsBlob = new Blob([textToWrite], {type:'application/json'});
-    //         var fileNameToSaveAs = "songNameHere.json";
-    //         var downloadLink = document.createElement("a");
-    //         downloadLink.download = fileNameToSaveAs;
-    //         downloadLink.innerHTML = "Download File";
-    //         if (window.webkitURL != null)
-    //         {
-    //             // for chrome
-    //             downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-    //         }
-    //         else
-    //         {
-    //             // for firefox
-    //             downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-    //             downloadLink.onclick = destroyClickedElement;
-    //             downloadLink.style.display = "none";
-    //             document.body.appendChild(downloadLink);
-    //         }
-    //         downloadLink.click();
 }
 
-// document.getElementById('files').addEventListener('change', loadFile, false);
+function exportFile() {
+    document.getElementById("deselect").focus();
+
+    var nArray = [];
+    noteArray.forEach(function(n){
+            var obj = {
+                noteType: n.noteType,
+                noteValue: n.noteValue,
+                lineNum: n.lineNum,
+                x: n.x,
+                y: n.y,
+                noteSound: n.noteSound 
+            };
+            nArray.push(obj);
+        });
+
+        var textToWrite = JSON.stringify(nArray);
+        
+        // rest of saving logic
+            var textFileAsBlob = new Blob([textToWrite], {type:'application/json'});
+            var fileNameToSaveAs = "songNameHere.json";
+            var downloadLink = document.createElement("a");
+            downloadLink.download = fileNameToSaveAs;
+            downloadLink.innerHTML = "Download File";
+            if (window.webkitURL != null)
+            {
+                // for chrome
+                downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+            }
+            else
+            {
+                // for firefox
+                downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+                downloadLink.onclick = destroyClickedElement;
+                downloadLink.style.display = "none";
+                document.body.appendChild(downloadLink);
+            }
+            downloadLink.click();
+}
+
+function importFile(evt) {
+    document.getElementById("deselect").focus();
+
+    var songFile = evt.target.files[0];
+    console.log(noteArray.length);
+    if(songFile) {
+        while(noteArray.length > 0) {
+            stage.removeChild(noteArray.pop());
+        }
+        var reader = new FileReader();
+        reader.onload = function(e) {   
+            var contents = e.target.result;
+            var jsonData = JSON.parse(contents);
+
+            if(jsonData !== null) {
+                jsonData.forEach(function(jsonNote){
+                    var newNote = note.clone();
+                    newNote.gotoAndStop(jsonNote.noteType);
+                    newNote.noteValue = jsonNote.noteValue;
+                    newNote.noteType = jsonNote.noteType;
+                    newNote.lineNum = jsonNote.lineNum;
+                    newNote.noteSound = jsonNote.noteSound;
+                    newNote.regX = 17;
+                    newNote.regY = 65;
+                    newNote.x = jsonNote.x;
+                    newNote.y = jsonNote.y;
+                    if(newNote.lineNum >= 10) {
+                        newNote.scaleY = -1;
+                        newNote.scaleX = -1;
+                    }
+                    newNote.on("click", function(evt) {
+                        createjs.Sound.play(jsonNote.noteSound);
+                    });
+                    noteArray.push(newNote);
+                    stage.addChild(newNote);
+                });
+            } else {
+                console.log("File data was null");
+            }
+        }
+        reader.readAsText(songFile);
+    } else {
+        console.log("Failed to load file.");
+    }
+    
+}
+
+document.getElementById('files').addEventListener('change', importFile, false);
 
 function loadFile() {
     document.getElementById("deselect").focus();
+    var songTitle = document.getElementById("songTitle").value;
+    if(songTitle != undefined || songTitle != "")  {
+        document.getElementById("loadSongName").value = songTitle;
+        console.log("song title: " + songTitle);
+    } else {
+        console.log("no song name to load");
+    }
+
     console.log("Song loaded");
-
-    // query database for song with name entered in textbox
-
-    // var songFile = evt.target.files[0];
-    // if(songFile) {
-    //     var reader = new FileReader();
-    //     reader.onload = function(e) {   
-    //         var contents = e.target.result;
-    //         var jsonData = JSON.parse(contents);
-
-    //         if(jsonData !== null) {
-    //             while(noteArray.length > 0) {
-    //                 stage.removeChild(noteArray.pop());
-    //             }
-    //             jsonData.forEach(function(jsonNote){
-    //                 var newNote = note.clone();
-    //                 newNote.gotoAndStop(jsonNote.noteType);
-    //                 newNote.noteValue = jsonNote.noteValue;
-    //                 newNote.noteType = jsonNote.noteType;
-    //                 newNote.lineNum = jsonNote.lineNum;
-    //                 newNote.noteSound = jsonNote.noteSound;
-    //                 newNote.regX = 17;
-    //                 newNote.regY = 65;
-    //                 newNote.x = jsonNote.x;
-    //                 newNote.y = jsonNote.y;
-    //                 if(newNote.lineNum >= 10) {
-    //                     newNote.scaleY = -1;
-    //                     newNote.scaleX = -1;
-    //                 }
-    //                 newNote.on("click", function(evt) {
-    //                     createjs.Sound.play(jsonNote.noteSound);
-    //                 });
-    //                 noteArray.push(newNote);
-    //                 stage.addChild(newNote);
-    //             });
-
-    //             // document.getElementById("loadingText").focus();
-
-    //         } else {
-    //             console.log("File data was null");
-    //         }
-    //     }
-    //     reader.readAsText(songFile);
-    // } else {
-    //     console.log("Failed to load file.");
-    // }
 }
+
 
 function destroyClickedElement(event){
     document.body.removeChild(event.target);

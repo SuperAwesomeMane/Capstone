@@ -17,7 +17,9 @@ router.get('/', function(req, res) {
 
 router.get('/compose', function(req, res) {
     if (req.user) {
-        var query = {username: req.user.username};
+        var query = {
+            username: req.user.username
+        };
         User.findOne(query, function(err, user) {
             if (user) {
                 res.render('compose', {
@@ -33,23 +35,40 @@ router.get('/compose', function(req, res) {
 });
 
 router.post('/compose', function(req, res, next) {
-    var newSongName = req.body.saveSongName;
-    var newSongNotes = JSON.parse(req.body.saveSongNotes);
+    if (req.body.saveSongName) {
+        var newSongName = req.body.saveSongName;
+        var newSongNotes = JSON.parse(req.body.saveSongNotes);
 
-    var query = {username: req.user.username};
-    User.findOne(query, function(err, user) {
-        var newSongObj = {};
-        newSongObj.songTitle = newSongName;
-        newSongObj.songNotes = newSongNotes;
+        var query = {
+            username: req.user.username
+        };
+        User.findOne(query, function(err, user) {
+            var newSongObj = {};
+            newSongObj.songTitle = newSongName;
+            newSongObj.songNotes = newSongNotes;
 
-        user.songs.push(newSongObj);
-        user.save(function(err) {
-            if (err) {
-                console.error("error: " + err);
-                return next(err);
-            }
+            user.songs.push(newSongObj);
+            user.save(function(err) {
+                if (err) {
+                    console.error("error: " + err);
+                    return next(err);
+                }
+            });
         });
-    });
+    } else if (req.body.loadSongName) {
+        var loadedSongName = req.body.loadSongName;
+
+        var query = {
+            username: req.user.username
+        };
+        User.findOne(query, function(err, user) {
+            user.songs.forEach(function(songIndex) {
+                if (songIndex.songTitle == loadedSongname) {
+                    // load that songs notes
+                }
+            });
+        });
+    }
 });
 
 module.exports = router;

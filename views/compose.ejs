@@ -30,18 +30,19 @@
 				<li><a href="/learn">Learn</a></li>
 
 				<li><form method="POST">
-					<input id="saveSongName" name="saveSongName" type="text" hidden='true'>
-					<input id="saveSongNotes" name="saveSongNotes" type="text" hidden='true'>
+					<input id="saveSongName" name="saveSongName" type="text" hidden='true' required>
+					<input id="saveSongNotes" name="saveSongNotes" type="text" hidden='true' required>
 					<input type="submit" onclick="saveFile();" value="Save Song" class="fileSaver">
 				</form></li>
 
-				<li><form>
-					<input id="loadSongName" type="text" hidden='true'>
-					<input id="loadSongNotes" type="text" hidden='true'>
+				<li><form method="POST">
+					<input id="loadSongName" name="loadSongName" type="text" hidden='true' required>
+					<input id="loadSongNotes" name="loadSongNotes" type="text" hidden='true' required>
 					<input onclick="loadFile()" type="submit" value="Load Song" class="fileLoader">
 				</form></li>
-				<!-- <input type="file" id="files" name="files[]" class="fileLoader"> -->
 				<li><input type"text" id="songTitle" placeholder="Enter song name"></li>
+				<button onclick="exportFile();" class="fileSaver">Export Song</button>
+				<input placeholder="load song" type="file" id="files" name="files[]" class="fileLoader">
 			</ul>
 		</nav>
 	</header>
