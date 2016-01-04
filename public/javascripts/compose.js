@@ -193,6 +193,44 @@ function loadComplete(evt) {
     document.getElementById("loading").src="";
     document.getElementById("loadingText").innerHTML="";
     drawTools();
+    var dbNotes = JSON.parse(document.getElementById("loadSongNotes").value);
+    if(dbNotes != "") {
+        showLoadedNotes();
+    }
+}
+
+function showLoadedNotes() {
+    var loadedNotes = JSON.parse(document.getElementById("loadSongNotes").value);
+
+    console.log("DBUGGING");
+    console.log(loadedNotes.length);
+    console.log(noteArray.length)
+
+    while(noteArray.length > 0) {
+        stage.removeChild(noteArray.pop());
+    }
+    
+    loadedNotes.forEach(function(loadedNote){
+        var newNote = note.clone();
+        newNote.gotoAndStop(loadedNote.noteType);
+        newNote.noteValue = loadedNote.noteValue;
+        newNote.noteType = loadedNote.noteType;
+        newNote.lineNum = loadedNote.lineNum;
+        newNote.noteSound = loadedNote.noteSound;
+        newNote.regX = 17;
+        newNote.regY = 65;
+        newNote.x = loadedNote.x;
+        newNote.y = loadedNote.y;
+        if(newNote.lineNum >= 10) {
+            newNote.scaleY = -1;
+            newNote.scaleX = -1;
+        }
+        newNote.on("click", function(evt) {
+            createjs.Sound.play(loadedNote.noteSound);
+        });
+        noteArray.push(newNote);
+        stage.addChild(newNote);
+    });
 }
 
 function loadFiles() {
@@ -524,17 +562,19 @@ document.getElementById('files').addEventListener('change', importFile, false);
 
 function loadFile() {
     document.getElementById("deselect").focus();
+
     var songTitle = document.getElementById("songTitle").value;
     if(songTitle != undefined || songTitle != "")  {
         document.getElementById("loadSongName").value = songTitle;
-        console.log("song title: " + songTitle);
+        console.log("song to load: " + songTitle);
     } else {
         console.log("no song name to load");
     }
-
-    console.log("Song loaded");
 }
 
+function getSongName(songName) {
+    document.getElementById("songTitle").value = songName;
+}
 
 function destroyClickedElement(event){
     document.body.removeChild(event.target);

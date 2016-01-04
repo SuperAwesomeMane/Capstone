@@ -30,15 +30,15 @@
 				<li><a href="/learn">Learn</a></li>
 
 				<li><form method="POST">
-					<input id="saveSongName" name="saveSongName" type="text" hidden='true' required>
-					<input id="saveSongNotes" name="saveSongNotes" type="text" hidden='true' required>
+					<input id="saveSongName" name="saveSongName" type="text" hidden='true'>
+					<input id="saveSongNotes" name="saveSongNotes" type="text" hidden='true'>
 					<input type="submit" onclick="saveFile();" value="Save Song" class="fileSaver">
 				</form></li>
 
 				<li><form method="POST">
-					<input id="loadSongName" name="loadSongName" type="text" hidden='true' required>
-					<input id="loadSongNotes" name="loadSongNotes" type="text" hidden='true' required>
-					<input onclick="loadFile()" type="submit" value="Load Song" class="fileLoader">
+					<input id="loadSongName" name="loadSongName" type="text" hidden='true' value="<%=songToLoadName%>">
+					<input id="loadSongNotes" name="loadSongNotes" type="text" hidden='true' value="<%=songToLoadNotes%>">
+					<input onclick="loadFile();" type="submit" value="Load Song" class="fileLoader">
 				</form></li>
 				<li><input type"text" id="songTitle" placeholder="Enter song name"></li>
 				<button onclick="exportFile();" class="fileSaver">Export Song</button>
@@ -52,7 +52,7 @@
 				<li>No Recent Songs</li>
 			<%} else { %>
 				<% user.songs.forEach(function(song) { %>
-					<li><a href="#"><%=song.songTitle%></a></li>
+					<li><a onclick="getSongName('<%=song.songTitle%>')" id="<%=song.songTitle%>" href="#"><%=song.songTitle%></a></li>
 				<% }) %>
 			<% } %>
 		</div>

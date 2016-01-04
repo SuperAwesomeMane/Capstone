@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var User = require('../models/userModel.js');
+var loadedSongName = "";
+var loadedSongNotes = ""; 
 
 router.get('/', function(req, res) {
     if (req.user) {
@@ -20,10 +22,14 @@ router.get('/compose', function(req, res) {
         var query = {
             username: req.user.username
         };
+        console.log("loadedSong: " + loadedSongName);
+        console.log("SONG NOTES: " + loadedSongNotes);
         User.findOne(query, function(err, user) {
             if (user) {
                 res.render('compose', {
                     user: user,
+                    songToLoadName: loadedSongName,
+                    songToLoadNotes: loadedSongNotes
                 });
             } else {
                 return next(err);
@@ -36,6 +42,8 @@ router.get('/compose', function(req, res) {
 
 router.post('/compose', function(req, res, next) {
     if (req.body.saveSongName) {
+        console.log("SAVING SONG");
+
         var newSongName = req.body.saveSongName;
         var newSongNotes = JSON.parse(req.body.saveSongNotes);
 
@@ -56,18 +64,24 @@ router.post('/compose', function(req, res, next) {
             });
         });
     } else if (req.body.loadSongName) {
-        var loadedSongName = req.body.loadSongName;
+        console.log("LOADING SONG");
+
+        loadedSongName = req.body.loadSongName;
 
         var query = {
             username: req.user.username
         };
         User.findOne(query, function(err, user) {
-            user.songs.forEach(function(songIndex) {
-                if (songIndex.songTitle == loadedSongname) {
-                    // load that songs notes
+           user.songs.forEach(function(songIndex) {
+                if (songIndex.songTitle == loadedSongName) {
+                    console.log("song title found for user");
+                    // console.log(songIndex.songTitle);
+                    // console.log(songIndex.songNotes);
+                    loadedSongNotes = JSON.stringify(songIndex.songNotes);
                 }
             });
         });
+        res.redirect("http://localhost:3000/create/compose");
     }
 });
 
