@@ -1045,9 +1045,6 @@ function keyPressed(event) {
 
 var noteInArray;
 
-function runGameTimer() {
-}
-
 function loop() {
     if(isPlaying) {
         frameCount += 1;
