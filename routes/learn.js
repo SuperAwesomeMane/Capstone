@@ -2,16 +2,13 @@ var express = require('express');
 var router = express.Router();
 var User = require('./models/userModel');
 
-var defUser = new User() {
-	username: 'User',
-	password: '12345',
-	image: '',
-	email: 'user@user.com',
-	lessonCompleted: 0,
-	facebook: '',
-	google: '',
-	songs: [];
-};
+var defUser = new User;
+  newUser.username = req.body.username;
+  newUser.image = "images/default.png";
+  newUser.password = req.body.password;
+  newUser.email = req.body.email;
+  newUser.lessonsCompleted = 0;
+  newUser.songs = [];
 
 router.get('/', function(req, res, next) {
 	if (req.user) {
