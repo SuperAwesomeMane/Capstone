@@ -34,7 +34,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({secret: 'anything'}));
+app.use(session({
+  secret: 'anything',
+  resave: true,
+  saveUninitialized: true
+}));
 
 require('./config/passport')(app);
 
