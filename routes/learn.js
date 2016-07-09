@@ -3,18 +3,19 @@ var router = express.Router();
 var User = require('./models/userModel');
 
 var defUser = new User;
-  newUser.username = req.body.username;
-  newUser.image = "images/default.png";
-  newUser.password = req.body.password;
-  newUser.email = req.body.email;
-  newUser.lessonsCompleted = 0;
-  newUser.songs = [];
+  defUser.username = req.body.username;
+  defUser.image = "images/default.png";
+  defUser.password = req.body.password;
+  defUser.email = req.body.email;
+  defUser.lessonsCompleted = 0;
+  defUser.songs = [];
 
 router.get('/', function(req, res, next) {
 	if (req.user) {
         res.render('learn', {user: defUser});
     } else {
-        res.render('learn', {user: "null"});
+        res.render('learn', {user: defUser});
+        // res.render('learn', {user: "null"});
     }
 });
 
