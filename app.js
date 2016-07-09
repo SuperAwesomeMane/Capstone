@@ -20,7 +20,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('./models/userModel');
 
 var app = express();
-var db = mongoose.connect('mongodb://localhost/clef');
+//var db = mongoose.connect('mongodb://localhost/clef');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
